@@ -1,0 +1,38 @@
+import Header from '@/components/layout/Header';
+import Hero from '@/components/home/Hero';
+import About from '@/components/home/About';
+import ProyectosPreview from '@/components/home/ProyectosPreview';
+import MixedGrid from '@/components/home/MixedGrid';
+import CTASection from '@/components/home/CTASection';
+import ContactForm from '@/components/home/ContactForm';
+import Footer from '@/components/layout/Footer';
+
+export default function HomePage() {
+  return (
+    <main className="min-h-screen bg-[#050505] text-[#f5f5f5] selection:bg-[#DFFF00] selection:text-black">
+      {/* HEADER */}
+      <Header />
+
+      {/* HERO SECTION */}
+      <Hero />
+
+      {/* ABOUT SECTION */}
+      <About />
+
+      {/* PROYECTOS PREVIEW (PORTAL TO SUBPAGES) */}
+      <ProyectosPreview />
+
+      {/* MIXED GRID: PHOTOS + VIDEOS SHUFFLED TOGETHER, NO FILTERS */}
+      <MixedGrid photoLimit={10} videoLimit={7} />
+
+      {/* HIGH IMPACT CTA SECTION */}
+      <CTASection />
+
+      {/* CLIENT INQUIRY & BOOKING FORM */}
+      <ContactForm />
+
+      {/* FOOTER */}
+      <Footer />
+    </main>
+  );
+}

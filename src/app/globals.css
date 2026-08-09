@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-space-grotesk: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-syne: 'Syne', sans-serif;
+  --font-space-mono: 'Space Mono', monospace;
+  
+  --color-bg: #050505;
+  --color-surface: #0e0e0e;
+  --color-surface-raised: #151515;
+  --color-border: #222222;
+  --color-text: #f5f5f5;
+  --color-muted: #888888;
+  --color-accent: #DFFF00; /* Acid Lime / High-Voltage Yellow */
+}
+
+/* STRICT ZERO BORDER RADIUS PER CONTEXT.MD */
+* {
+  border-radius: 0px !important;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-space-grotesk);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  overflow-x: hidden;
+  selection-background-color: #DFFF00;
+  selection-color: #000000;
+}
+
+::selection {
+  background-color: #DFFF00;
+  color: #000000;
+}
+
+/* GEOMETRIC LINE GRIDS & CROSSHAIRS */
+.crosshair-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.subtle-scanline {
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.3)
+  );
+  background-size: 100% 4px;
+}
+
+/* CUSTOM GEOMETRIC SCROLLBAR */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #DFFF00;
+}
+
+/* EDITORIAL UTILITIES */
+.font-editorial {
+  font-family: var(--font-syne);
+  letter-spacing: -0.03em;
+}
+
+.font-tech {
+  font-family: var(--font-space-mono);
+  letter-spacing: -0.01em;
+}
+
+/* GLOW AND ACCENT UTILITIES */
+.accent-border-glow:hover {
+  border-color: #DFFF00;
+  box-shadow: 0 0 15px rgba(223, 255, 0, 0.25);
+}
+
+.accent-text-glow {
+  text-shadow: 0 0 10px rgba(223, 255, 0, 0.4);
+}
+
+/* RECORDING BLINK */
+@keyframes rec-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.animate-rec {
+  animation: rec-blink 1.2s infinite ease-in-out;
+}
+
+/* CUSTOM CAMERA VIEWFINDER CURSOR */
+html.custom-cursor-active,
+html.custom-cursor-active body,
+html.custom-cursor-active * {
+  cursor: none !important;
+}
+
+/* Default state: subtle 28px square with corner brackets */
+.cursor-state-default > div {
+  width: 26px;
+  height: 26px;
+  border-color: rgba(223, 255, 0, 0.25);
+  background-color: transparent;
+}
+.cursor-state-default .corner-tl,
+.cursor-state-default .corner-tr,
+.cursor-state-default .corner-bl,
+.cursor-state-default .corner-br {
+  border-color: rgba(223, 255, 0, 0.6);
+}
+
+/* Link/Interactive state: expanded 42px square with bright corners */
+.cursor-state-link > div {
+  width: 44px;
+  height: 44px;
+  border-color: rgba(223, 255, 0, 0.5);
+  background-color: rgba(223, 255, 0, 0.05);
+}
+.cursor-state-link .corner-tl,
+.cursor-state-link .corner-tr,
+.cursor-state-link .corner-bl,
+.cursor-state-link .corner-br {
+  border-color: #DFFF00;
+  width: 10px;
+  height: 10px;
+}
+.cursor-dot-link > div {
+  background-color: #ffffff;
+  transform: scale(1.3);
+}
+
+/* Media/Viewfinder state: 56px targeting reticle with crosshairs */
+.cursor-state-media > div {
+  width: 58px;
+  height: 58px;
+  border-color: #DFFF00;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.cursor-state-media .corner-tl,
+.cursor-state-media .corner-tr,
+.cursor-state-media .corner-bl,
+.cursor-state-media .corner-br {
+  border-color: #DFFF00;
+  width: 12px;
+  height: 12px;
+}
+.cursor-state-media .crosshair-h,
+.cursor-state-media .crosshair-v {
+  opacity: 1;
+}
+.cursor-dot-media > div {
+  background-color: #DFFF00;
+  transform: scale(0.8);
+}

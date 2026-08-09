@@ -96,3 +96,67 @@ responsabilidades y la gestión de medios:
         ├── /imagenes       
         └── /videos
 ```
+
+## 6. Componentes de la pagina
+
+Debes crear los componentes que tendran el codigo y en las page armas las
+paginas en base a los componentes
+
+- Header
+- Hero
+- About
+- Proyectos
+  - Fotografia (Subpagina)
+    - Galeria
+    - Contacto
+  - Video (Subpagina)
+    - Galeria
+    - Contacto
+- CTA
+- Contacto
+- Footer
+
+### Header
+
+Debe estar presente en toda la pagina, la cual tendra el nombre del lado
+izquierdo, y en medio los enlaces de navegacion: Inicio, About, Proyectos,
+Contacto, CTA, Footer y boton CTA. en el responsive que sea menu de hambruguesa,
+con side bar con los enlaces y el boton CTA, que tenga un boton de cerrar en el
+header.
+
+### About
+
+Esta seccion contara con una descripcion del creador del contenido y su
+experiencia, sus valores, su trayectoria, etc.
+
+### Proyectos
+
+Esta seccion sera de enlaze y como vista previa a los dos tipos de trabajo
+realizados por el fotografo video y fotografia, que cada una debe llevar a su
+pagina con su galeria propia
+
+### Galerias
+
+Esta seccion contara con una galeria de imagenes o videos, sera un grid con
+varios tamaños que no sean iguales donde mostraras los videos o imagenes de el
+fotografo, cada click a un video o imagen debe abrir un modal o abrirlo grande
+para que muestre una pequeña descripcion del trabajo
+
+### CTA
+
+Esta seccion debe ser llamativa y servir como cta
+
+### Contacto
+
+Formulario para que los clientes puedan contactarte, con infomacion de contacto,
+y demas
+
+### Footer
+
+Links a redes, nombre del creador, y copyright, desarrollado por Juan de momento
+
+### Nota global
+
+los diseños deben ser arriesgado y exoticos deben ser unicos, que no parezca una
+pagina comercial si no de alguien creativo, no debe parecer generada por IA;
+evita el uso de emojis, y textos resaltados con fondos.
