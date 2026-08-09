@@ -177,3 +177,36 @@ html.custom-cursor-active * {
   background-color: #DFFF00;
   transform: scale(0.8);
 }
+
+/* AUTONOMOUS INFINITE SCROLL KEYFRAMES (60 FPS GPU HARDWARE ACCELERATED) */
+@keyframes infinite-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-33.333333%, 0, 0);
+  }
+}
+
+@keyframes infinite-scroll-reverse {
+  from {
+    transform: translate3d(-33.333333%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-infinite-scroll {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: infinite-scroll 30s linear infinite;
+}
+
+.animate-infinite-scroll-reverse {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: infinite-scroll-reverse 25s linear infinite;
+}

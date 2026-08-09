@@ -73,9 +73,9 @@ export default function Header({ activeSection }: HeaderProps) {
                 <span className="font-editorial font-bold text-lg tracking-wider text-white flex items-center gap-2">
                   WES
                 </span>
-                <span className="text-[9px] font-tech uppercase tracking-widest text-[#888888] hidden md:block">
+                {/* <span className="text-[9px] font-tech uppercase tracking-widest text-[#888888] hidden md:block">
                   CINEMA & STILLS
-                </span>
+                </span> */}
                 <span className="text-[9px] font-tech text-[#DFFF00] tracking-wider">
                   @weslypacheco
                 </span>

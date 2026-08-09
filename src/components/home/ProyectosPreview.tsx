@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowUpRight, Camera, Film } from 'lucide-react';
 import { FadeUp, StaggerContainer, StaggerItem } from '@/components/animations/MotionWrapper';
+import ScrollDrawLine from '@/components/animations/ScrollDrawLine';
 import MagneticButton from '@/components/animations/MagneticButton';
 
 export default function ProyectosPreview() {
@@ -11,7 +12,7 @@ export default function ProyectosPreview() {
     <section id="proyectos" className="py-20 bg-[#050505] border-b border-[#222222] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* SECTION TITLE */}
-        <FadeUp className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#222222] pb-5 mb-10 gap-4">
+        <FadeUp className="flex flex-col md:flex-row md:items-end justify-between pb-4 gap-4">
           <div>
             <div className="text-[11px] font-tech text-[#DFFF00] tracking-widest uppercase mb-1 flex items-center gap-2">
               <span className="w-3 h-px bg-[#DFFF00]" />
@@ -25,6 +26,9 @@ export default function ProyectosPreview() {
             Selecciona una rama para acceder a su galería de 5 columnas con filtrado instantáneo y streaming en alta resolución.
           </p>
         </FadeUp>
+
+        {/* BLUEPRINT DRAW LINE */}
+        <ScrollDrawLine color="#222222" className="mb-10" />
 
         {/* DUAL SPLIT PREVIEW CARDS */}
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">

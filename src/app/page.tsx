@@ -1,6 +1,6 @@
 import Header from '@/components/layout/Header';
 import Hero from '@/components/home/Hero';
-import InfiniteTicker from '@/components/animations/InfiniteTicker';
+import AutonomousInfiniteReel from '@/components/animations/AutonomousInfiniteReel';
 import About from '@/components/home/About';
 import ProyectosPreview from '@/components/home/ProyectosPreview';
 import MixedGrid from '@/components/home/MixedGrid';
@@ -17,8 +17,8 @@ export default function HomePage() {
       {/* HERO SECTION */}
       <Hero />
 
-      {/* CONTINUOUS TECHNICAL MARQUEE TICKER */}
-      <InfiniteTicker />
+      {/* AUTONOMOUS 100% SELF-SCROLLING 35MM INFINITE FILM REEL & TELEMETRY TAPE */}
+      <AutonomousInfiniteReel />
 
       {/* ABOUT SECTION */}
       <About />

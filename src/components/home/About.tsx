@@ -1,22 +1,26 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ARTIST_PROFILE } from '@/helpers/mediaData';
-import { ArrowUpRight, Camera, CheckCircle2, Crosshair, Film, Layers, Sliders, Zap } from 'lucide-react';
-import { FadeUp, ShutterWipe, StaggerContainer, StaggerItem } from '@/components/animations/MotionWrapper';
+import { Sliders } from 'lucide-react';
+import { FadeUp, StaggerContainer, StaggerItem } from '@/components/animations/MotionWrapper';
+import ScrollDrawLine from '@/components/animations/ScrollDrawLine';
+import ScrollParallaxRow from '@/components/animations/ScrollParallaxRow';
 import CounterStat from '@/components/animations/CounterStat';
 
 export default function About() {
   return (
     <section id="about" className="py-16 sm:py-24 bg-[#080808] border-b border-[#222222] relative overflow-hidden">
-      {/* BACKGROUND DECORATIVE GRID LINES */}
+      {/* BACKGROUND DECORATIVE GRID LINES & PARALLAX WATERMARK */}
       <div className="absolute inset-0 crosshair-grid opacity-15 pointer-events-none" />
+      <div className="absolute top-1/3 inset-x-0 pointer-events-none z-0">
+        <ScrollParallaxRow text="CINEMATOGRAPHY // EDITORIAL // SONY FX3 // ACES // 35MM FILM" direction="left" speed={200} />
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* SECTION HEADER */}
-        <FadeUp className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#222222] pb-5 mb-10 sm:mb-16 gap-3 sm:gap-4">
+        <FadeUp className="flex flex-col md:flex-row md:items-end justify-between pb-5 mb-4 gap-3 sm:gap-4">
           <div>
             <div className="text-[11px] font-tech text-[#DFFF00] tracking-widest uppercase mb-1 flex items-center gap-2">
               <span className="w-3 h-px bg-[#DFFF00]" />
@@ -33,6 +37,9 @@ export default function About() {
             <span className="text-xs font-tech text-white">+5 AÑOS EN PRODUCCIÓN AUDIOCINEMATOGRÁFICA</span>
           </div>
         </FadeUp>
+
+        {/* BLUEPRINT DRAW LINE UNDER HEADER */}
+        <ScrollDrawLine color="#2a2a2a" className="mb-10 sm:mb-14" />
 
         {/* TELEMETRY STATS COUNTER BAR */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-12">
@@ -64,7 +71,7 @@ export default function About() {
 
         {/* MAIN ABOUT GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* LEFT: PHOTOGRAPHER PORTRAIT WITH CAMERA OVERLAY & SCANLINE */}
+          {/* LEFT: PHOTOGRAPHER PORTRAIT WITH ASSEMBLED CAMERA BRACKETS & SCANLINE */}
           <FadeUp delay={0.1} className="lg:col-span-5 relative">
             <div className="border-2 border-[#2a2a2a] bg-[#0d0d0d] p-2 relative group">
               {/* TOP RETICLE */}
@@ -93,11 +100,35 @@ export default function About() {
                   className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#DFFF00]/40 to-transparent pointer-events-none"
                 />
 
-                {/* CORNER MARKS */}
-                <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-[#DFFF00]" />
-                <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-[#DFFF00]" />
-                <div className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-[#DFFF00]" />
-                <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-[#DFFF00]" />
+                {/* ASSEMBLED CORNER TARGETING MARKS */}
+                <motion.div
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-[#DFFF00]"
+                />
+                <motion.div
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-[#DFFF00]"
+                />
+                <motion.div
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-[#DFFF00]"
+                />
+                <motion.div
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-[#DFFF00]"
+                />
 
                 <div className="absolute bottom-3 left-3 bg-[#0a0a0a]/95 px-3 py-1.5 border border-[#222222]">
                   <div className="text-xs font-editorial font-bold text-white tracking-wider">
@@ -132,32 +163,44 @@ export default function About() {
               </p>
             </FadeUp>
 
-            {/* TIMELINE / TRAYECTORIA */}
-            <div className="space-y-4 pt-4 border-t border-[#1f1f1f]">
+            {/* TIMELINE / TRAYECTORIA WITH PROGRESSIVE TRACER LINE */}
+            <div className="space-y-4 pt-4 border-t border-[#1f1f1f] relative">
               <span className="text-xs font-tech text-[#DFFF00] uppercase tracking-widest block">
                 // TRAYECTORIA PROFESIONAL
               </span>
-              <StaggerContainer className="space-y-3">
-                {ARTIST_PROFILE.trajectory.map((item, index) => (
-                  <StaggerItem
-                    key={index}
-                    className="p-4 border border-[#1a1a1a] bg-[#0a0a0a] hover:border-[#DFFF00]/60 transition-colors flex flex-col space-y-1.5"
-                  >
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="font-editorial text-sm font-bold text-white tracking-wide">
-                        {item.title}
-                      </span>
-                      <span className="px-2 py-0.5 bg-[#171717] border border-[#222222] text-[10px] font-tech text-[#DFFF00]">
-                        {item.year}
-                      </span>
-                    </div>
-                    <div className="text-xs font-tech text-[#888888]">{item.company}</div>
-                    <p className="text-xs text-[#a0a0a0] leading-relaxed pt-1 font-sans">
-                      {item.description}
-                    </p>
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
+
+              {/* VERTICAL TRACER LINE THAT DRAWS DOWNWARD WITH SCROLL */}
+              <div className="relative pl-4 border-l border-[#1f1f1f]">
+                <motion.div
+                  initial={{ scaleY: 0, originY: 0 }}
+                  whileInView={{ scaleY: 1 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#DFFF00] via-[#DFFF00]/70 to-[#DFFF00]/20 shadow-[0_0_8px_rgba(223,255,0,0.5)]"
+                />
+
+                <StaggerContainer className="space-y-3">
+                  {ARTIST_PROFILE.trajectory.map((item, index) => (
+                    <StaggerItem
+                      key={index}
+                      className="p-4 border border-[#1a1a1a] bg-[#0a0a0a] hover:border-[#DFFF00]/60 transition-colors flex flex-col space-y-1.5"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <span className="font-editorial text-sm font-bold text-white tracking-wide">
+                          {item.title}
+                        </span>
+                        <span className="px-2 py-0.5 bg-[#171717] border border-[#222222] text-[10px] font-tech text-[#DFFF00]">
+                          {item.year}
+                        </span>
+                      </div>
+                      <div className="text-xs font-tech text-[#888888]">{item.company}</div>
+                      <p className="text-xs text-[#a0a0a0] leading-relaxed pt-1 font-sans">
+                        {item.description}
+                      </p>
+                    </StaggerItem>
+                  ))}
+                </StaggerContainer>
+              </div>
             </div>
           </div>
         </div>
