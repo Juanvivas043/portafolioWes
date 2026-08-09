@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import { ARTIST_PROFILE } from '@/helpers/mediaData';
-import { ArrowUpRight, CheckCircle2, Mail, MapPin, Phone, Send, Sparkles } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2, Mail, MapPin, Phone, Send } from 'lucide-react';
+import { FadeUp } from '@/components/animations/MotionWrapper';
+import MagneticButton from '@/components/animations/MagneticButton';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -14,20 +16,20 @@ export default function ContactForm() {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitted(true);
   };
 
   return (
-    <section id="contacto" className="py-16 sm:py-24 bg-[#050505] border-b border-[#222222] relative">
+    <section id="contacto" className="py-16 sm:py-24 bg-[#050505] border-b border-[#222222] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* SECTION TITLE */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#222222] pb-5 mb-10 sm:mb-16 gap-3 sm:gap-4">
+        <FadeUp className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#222222] pb-5 mb-10 sm:mb-16 gap-3 sm:gap-4">
           <div>
-            <div className="text-[11px] font-tech text-[#DFFF00] tracking-widest uppercase mb-1">
-              // CONTACTO & CONTRATACIONES
+            <div className="text-[11px] font-tech text-[#DFFF00] tracking-widest uppercase mb-1 flex items-center gap-2">
+              <span className="w-3 h-px bg-[#DFFF00]" />
+              CONTACTO & CONTRATACIONES
             </div>
             <h2 className="font-editorial text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
               COTIZAR PRODUCCIÓN // WES
@@ -39,11 +41,11 @@ export default function ContactForm() {
             </span>
             <span className="text-xs font-tech text-[#DFFF00]">DENTRO DE LAS 24 HORAS</span>
           </div>
-        </div>
+        </FadeUp>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
           {/* LEFT: DIRECT CONTACT INFO & CALENDAR STATUS */}
-          <div className="lg:col-span-5 space-y-8 flex flex-col h-full">
+          <FadeUp delay={0.1} className="lg:col-span-5 space-y-8 flex flex-col h-full">
             <div className="p-6 border-2 border-[#222222] bg-[#0a0a0a] space-y-6">
               <div className="flex items-center justify-between pb-3 border-b border-[#1f1f1f] text-[10px] font-tech">
                 <span className="text-white font-bold">INFO DIRECTA</span>
@@ -112,10 +114,10 @@ export default function ContactForm() {
                 <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>
-          </div>
+          </FadeUp>
 
           {/* RIGHT: INTERACTIVE BOOKING FORM */}
-          <div className="lg:col-span-7 flex flex-col h-full">
+          <FadeUp delay={0.2} className="lg:col-span-7 flex flex-col h-full">
             {isSubmitted ? (
               <div className="p-10 border-2 border-[#DFFF00] bg-[#0c0c0c] text-center space-y-4">
                 <CheckCircle2 className="w-12 h-12 text-[#DFFF00] mx-auto" />
@@ -198,17 +200,19 @@ export default function ContactForm() {
                   />
                 </div>
 
-                {/* SUBMIT BUTTON */}
-                <button
-                  type="submit"
-                  className="w-full py-4 bg-[#DFFF00] text-black font-tech text-xs font-bold uppercase tracking-wider hover:bg-white transition-all flex items-center justify-center space-x-2 border border-[#DFFF00]"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>ENVIAR SOLICITUD DE PRODUCCIÓN</span>
-                </button>
+                {/* SUBMIT BUTTON WITH MAGNETIC HOVER */}
+                <MagneticButton strength={12} className="w-full">
+                  <button
+                    type="submit"
+                    className="w-full py-4 bg-[#DFFF00] text-black font-tech text-xs font-bold uppercase tracking-wider hover:bg-white transition-all flex items-center justify-center space-x-2 border border-[#DFFF00]"
+                  >
+                    <Send className="w-4 h-4" />
+                    <span>ENVIAR SOLICITUD DE PRODUCCIÓN</span>
+                  </button>
+                </MagneticButton>
               </form>
             )}
-          </div>
+          </FadeUp>
         </div>
       </div>
     </section>

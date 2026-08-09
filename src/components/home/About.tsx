@@ -2,8 +2,11 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { ARTIST_PROFILE } from '@/helpers/mediaData';
 import { ArrowUpRight, Camera, CheckCircle2, Crosshair, Film, Layers, Sliders, Zap } from 'lucide-react';
+import { FadeUp, ShutterWipe, StaggerContainer, StaggerItem } from '@/components/animations/MotionWrapper';
+import CounterStat from '@/components/animations/CounterStat';
 
 export default function About() {
   return (
@@ -13,10 +16,11 @@ export default function About() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* SECTION HEADER */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#222222] pb-5 mb-10 sm:mb-16 gap-3 sm:gap-4">
+        <FadeUp className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#222222] pb-5 mb-10 sm:mb-16 gap-3 sm:gap-4">
           <div>
-            <div className="text-[11px] font-tech text-[#DFFF00] tracking-widest uppercase mb-1">
-              // IDENTIDAD & TRAYECTORIA
+            <div className="text-[11px] font-tech text-[#DFFF00] tracking-widest uppercase mb-1 flex items-center gap-2">
+              <span className="w-3 h-px bg-[#DFFF00]" />
+              IDENTIDAD & TRAYECTORIA
             </div>
             <h2 className="font-editorial text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
               MI TRAYECTORIA
@@ -28,17 +32,48 @@ export default function About() {
             </span>
             <span className="text-xs font-tech text-white">+5 AÑOS EN PRODUCCIÓN AUDIOCINEMATOGRÁFICA</span>
           </div>
+        </FadeUp>
+
+        {/* TELEMETRY STATS COUNTER BAR */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-12">
+          <div className="p-4 bg-[#0c0c0c] border border-[#1f1f1f] hover:border-[#DFFF00]/50 transition-colors">
+            <div className="text-[10px] font-tech text-[#666666] tracking-widest uppercase">// PRODUCCIONES</div>
+            <div className="text-3xl font-editorial font-bold text-white mt-1">
+              <CounterStat value={50} prefix="+" suffix=" Prods" />
+            </div>
+          </div>
+          <div className="p-4 bg-[#0c0c0c] border border-[#1f1f1f] hover:border-[#DFFF00]/50 transition-colors">
+            <div className="text-[10px] font-tech text-[#666666] tracking-widest uppercase">// TRAYECTORIA</div>
+            <div className="text-3xl font-editorial font-bold text-[#DFFF00] mt-1">
+              <CounterStat value={6} prefix="+" suffix=" Años" />
+            </div>
+          </div>
+          <div className="p-4 bg-[#0c0c0c] border border-[#1f1f1f] hover:border-[#DFFF00]/50 transition-colors">
+            <div className="text-[10px] font-tech text-[#666666] tracking-widest uppercase">// RESOLUCIÓN MASTER</div>
+            <div className="text-3xl font-editorial font-bold text-white mt-1">
+              <span>4K DCI</span>
+            </div>
+          </div>
+          <div className="p-4 bg-[#0c0c0c] border border-[#1f1f1f] hover:border-[#DFFF00]/50 transition-colors">
+            <div className="text-[10px] font-tech text-[#666666] tracking-widest uppercase">// COLOR SCIENCE</div>
+            <div className="text-3xl font-editorial font-bold text-[#DFFF00] mt-1">
+              <CounterStat value={100} suffix="% ACES" />
+            </div>
+          </div>
         </div>
 
         {/* MAIN ABOUT GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* LEFT: PHOTOGRAPHER PORTRAIT WITH CAMERA OVERLAY */}
-          <div className="lg:col-span-5 relative">
-            <div className="border-2 border-[#2a2a2a] bg-[#0d0d0d] p-2 relative">
+          {/* LEFT: PHOTOGRAPHER PORTRAIT WITH CAMERA OVERLAY & SCANLINE */}
+          <FadeUp delay={0.1} className="lg:col-span-5 relative">
+            <div className="border-2 border-[#2a2a2a] bg-[#0d0d0d] p-2 relative group">
               {/* TOP RETICLE */}
               <div className="flex items-center justify-between text-[10px] font-tech text-[#888888] pb-2 mb-2 border-b border-[#1f1f1f]">
                 <span>FOTÓGRAFO & DIRECTOR</span>
-                <span className="text-[#DFFF00]">STATUS: DISPONIBLE</span>
+                <span className="text-[#DFFF00] flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 bg-[#DFFF00] animate-pulse" />
+                  STATUS: DISPONIBLE
+                </span>
               </div>
 
               <div className="relative aspect-[3/4] bg-black overflow-hidden border border-[#1f1f1f]">
@@ -47,7 +82,15 @@ export default function About() {
                   alt="WES Director y Fotógrafo"
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
-                  className="object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-500"
+                  className="object-cover grayscale contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700"
+                />
+
+                {/* ANIMATED SCANLINE LASER */}
+                <motion.div
+                  initial={{ y: '-100%' }}
+                  animate={{ y: ['-100%', '400%'] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                  className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#DFFF00]/40 to-transparent pointer-events-none"
                 />
 
                 {/* CORNER MARKS */}
@@ -72,12 +115,12 @@ export default function About() {
                 <span className="text-[#DFFF00] font-bold">CARACAS / GLOBAL</span>
               </div>
             </div>
-          </div>
+          </FadeUp>
 
           {/* RIGHT: BIOGRAPHY, PHILOSOPHY & TRAJECTORY */}
           <div className="lg:col-span-7 space-y-8">
             {/* BIO TEXT */}
-            <div className="space-y-4">
+            <FadeUp delay={0.2} className="space-y-4">
               <h3 className="font-editorial text-2xl font-bold text-white tracking-tight">
                 VISIÓN, ESTÉTICA Y NARRATIVA VISUAL
               </h3>
@@ -87,16 +130,19 @@ export default function About() {
               <p className="text-sm text-[#888888] font-sans leading-relaxed">
                 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
               </p>
-            </div>
+            </FadeUp>
 
             {/* TIMELINE / TRAYECTORIA */}
             <div className="space-y-4 pt-4 border-t border-[#1f1f1f]">
               <span className="text-xs font-tech text-[#DFFF00] uppercase tracking-widest block">
                 // TRAYECTORIA PROFESIONAL
               </span>
-              <div className="space-y-3">
+              <StaggerContainer className="space-y-3">
                 {ARTIST_PROFILE.trajectory.map((item, index) => (
-                  <div key={index} className="p-4 border border-[#1a1a1a] bg-[#0a0a0a] flex flex-col space-y-1.5">
+                  <StaggerItem
+                    key={index}
+                    className="p-4 border border-[#1a1a1a] bg-[#0a0a0a] hover:border-[#DFFF00]/60 transition-colors flex flex-col space-y-1.5"
+                  >
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <span className="font-editorial text-sm font-bold text-white tracking-wide">
                         {item.title}
@@ -109,15 +155,15 @@ export default function About() {
                     <p className="text-xs text-[#a0a0a0] leading-relaxed pt-1 font-sans">
                       {item.description}
                     </p>
-                  </div>
+                  </StaggerItem>
                 ))}
-              </div>
+              </StaggerContainer>
             </div>
           </div>
         </div>
 
         {/* GEAR & OPTICS SECTION */}
-        <div className="mt-20 pt-12 border-t border-[#222222]">
+        <FadeUp delay={0.2} className="mt-20 pt-12 border-t border-[#222222]">
           <div className="flex items-center space-x-2 text-xs font-tech text-[#DFFF00] uppercase tracking-widest mb-6">
             <Sliders className="w-4 h-4" />
             <span>// ARSENAL ÓPTICO & HARDWARE CINEMATOGRÁFICO</span>
@@ -125,7 +171,7 @@ export default function About() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {ARTIST_PROFILE.gear.map((gearCategory) => (
-              <div key={gearCategory.category} className="p-5 border border-[#1f1f1f] bg-[#0c0c0c]">
+              <div key={gearCategory.category} className="p-5 border border-[#1f1f1f] bg-[#0c0c0c] hover:border-[#333333] transition-colors">
                 <div className="text-sm font-editorial font-bold text-white tracking-wide pb-3 mb-3 border-b border-[#1f1f1f]">
                   {gearCategory.category}
                 </div>
@@ -140,10 +186,10 @@ export default function About() {
               </div>
             ))}
           </div>
-        </div>
+        </FadeUp>
 
         {/* CLIENT ROSTER */}
-        <div className="mt-16 pt-10 border-t border-[#1f1f1f]">
+        <FadeUp delay={0.1} className="mt-16 pt-10 border-t border-[#1f1f1f]">
           <div className="text-center text-xs font-tech text-[#666666] uppercase tracking-widest mb-6">
             // CLIENTES & MARCAS QUE HAN CONFIADO SU VISIÓN
           </div>
@@ -158,7 +204,7 @@ export default function About() {
               </div>
             ))}
           </div>
-        </div>
+        </FadeUp>
       </div>
     </section>
   );

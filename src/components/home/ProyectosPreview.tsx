@@ -3,16 +3,19 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowUpRight, Camera, Film } from 'lucide-react';
+import { FadeUp, StaggerContainer, StaggerItem } from '@/components/animations/MotionWrapper';
+import MagneticButton from '@/components/animations/MagneticButton';
 
 export default function ProyectosPreview() {
   return (
-    <section id="proyectos" className="py-20 bg-[#050505] border-b border-[#222222] relative">
+    <section id="proyectos" className="py-20 bg-[#050505] border-b border-[#222222] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* SECTION TITLE */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#222222] pb-5 mb-10 gap-4">
+        <FadeUp className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#222222] pb-5 mb-10 gap-4">
           <div>
-            <div className="text-[11px] font-tech text-[#DFFF00] tracking-widest uppercase mb-1">
-              // EXPLORACIÓN DISCIPLINARIA
+            <div className="text-[11px] font-tech text-[#DFFF00] tracking-widest uppercase mb-1 flex items-center gap-2">
+              <span className="w-3 h-px bg-[#DFFF00]" />
+              EXPLORACIÓN DISCIPLINARIA
             </div>
             <h2 className="font-editorial text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
               PROYECTOS & DISCIPLINAS
@@ -21,12 +24,12 @@ export default function ProyectosPreview() {
           <p className="text-xs font-tech text-[#888888] max-w-sm">
             Selecciona una rama para acceder a su galería de 5 columnas con filtrado instantáneo y streaming en alta resolución.
           </p>
-        </div>
+        </FadeUp>
 
         {/* DUAL SPLIT PREVIEW CARDS */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* BRANCH 1: FOTOGRAFÍA */}
-          <div className="group relative border-2 border-[#222222] bg-[#0c0c0c] p-3 hover:border-[#DFFF00] transition-all duration-300">
+          <StaggerItem className="group relative border-2 border-[#222222] bg-[#0c0c0c] p-3 hover:border-[#DFFF00] transition-all duration-300">
             {/* CARD TOP INFO */}
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#1f1f1f] text-[11px] font-tech text-[#888888]">
               <div className="flex items-center space-x-2 text-white font-bold">
@@ -55,6 +58,12 @@ export default function ProyectosPreview() {
                   EXIF VERIFICADO
                 </div>
               </div>
+
+              {/* CORNER BRACKETS */}
+              <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-[#DFFF00] opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-[#DFFF00] opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-[#DFFF00] opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-[#DFFF00] opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
 
             {/* CARD BODY */}
@@ -77,19 +86,21 @@ export default function ProyectosPreview() {
                 ))}
               </div>
 
-              {/* CTA LINK BUTTON */}
-              <Link
-                href="/proyectos/fotografia"
-                className="w-full py-3 bg-[#171717] hover:bg-[#DFFF00] text-white hover:text-black font-tech text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center space-x-2 border border-[#2a2a2a] hover:border-[#DFFF00] transition-all"
-              >
-                <span>VER GALERÍA DE FOTOS</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
+              {/* CTA LINK BUTTON WITH MAGNETIC HOVER */}
+              <MagneticButton strength={10} className="w-full">
+                <Link
+                  href="/proyectos/fotografia"
+                  className="w-full py-3 bg-[#171717] hover:bg-[#DFFF00] text-white hover:text-black font-tech text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center space-x-2 border border-[#2a2a2a] hover:border-[#DFFF00] transition-all"
+                >
+                  <span>VER GALERÍA DE FOTOS</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </Link>
+              </MagneticButton>
             </div>
-          </div>
+          </StaggerItem>
 
           {/* BRANCH 2: CINEMATOGRAFÍA & VIDEO */}
-          <div className="group relative border-2 border-[#222222] bg-[#0c0c0c] p-3 hover:border-[#DFFF00] transition-all duration-300">
+          <StaggerItem className="group relative border-2 border-[#222222] bg-[#0c0c0c] p-3 hover:border-[#DFFF00] transition-all duration-300">
             {/* CARD TOP INFO */}
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#1f1f1f] text-[11px] font-tech text-[#888888]">
               <div className="flex items-center space-x-2 text-white font-bold">
@@ -118,6 +129,12 @@ export default function ProyectosPreview() {
                   PRORES / ACEScct
                 </div>
               </div>
+
+              {/* CORNER BRACKETS */}
+              <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-[#DFFF00] opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-[#DFFF00] opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-[#DFFF00] opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-[#DFFF00] opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
 
             {/* CARD BODY */}
@@ -140,17 +157,19 @@ export default function ProyectosPreview() {
                 ))}
               </div>
 
-              {/* CTA LINK BUTTON */}
-              <Link
-                href="/proyectos/video"
-                className="w-full py-3 bg-[#171717] hover:bg-[#DFFF00] text-white hover:text-black font-tech text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center space-x-2 border border-[#2a2a2a] hover:border-[#DFFF00] transition-all"
-              >
-                <span>VER GALERÍA DE CINEMATOGRAFÍA</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
+              {/* CTA LINK BUTTON WITH MAGNETIC HOVER */}
+              <MagneticButton strength={10} className="w-full">
+                <Link
+                  href="/proyectos/video"
+                  className="w-full py-3 bg-[#171717] hover:bg-[#DFFF00] text-white hover:text-black font-tech text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center space-x-2 border border-[#2a2a2a] hover:border-[#DFFF00] transition-all"
+                >
+                  <span>VER GALERÍA DE CINEMATOGRAFÍA</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </Link>
+              </MagneticButton>
             </div>
-          </div>
-        </div>
+          </StaggerItem>
+        </StaggerContainer>
       </div>
     </section>
   );

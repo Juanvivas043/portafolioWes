@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
 import { Menu, X, ArrowUpRight, Camera, Film } from 'lucide-react';
+import MagneticButton from '@/components/animations/MagneticButton';
 
 interface HeaderProps {
   activeSection?: string;
@@ -12,7 +13,7 @@ interface HeaderProps {
 export default function Header({ activeSection }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [time, setTime] = useState<string>('00:00:00:00');
-  const { isScrolled } = useScrollPosition();
+  const { isScrolled, scrollProgress } = useScrollPosition();
 
   // Live cinematic timecode simulator
   useEffect(() => {
@@ -126,14 +127,16 @@ export default function Header({ activeSection }: HeaderProps) {
               </Link>
             </div>
 
-            {/* MAIN CTA BUTTON — hidden on mobile, shown on desktop */}
-            <Link
-              href="/#contacto"
-              className="hidden lg:flex px-4 py-2 bg-[#DFFF00] text-black font-tech text-xs font-bold uppercase tracking-wider hover:bg-white transition-all items-center space-x-1 border border-[#DFFF00]"
-            >
-              <span>CONTACTO</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </Link>
+            {/* MAIN CTA BUTTON WITH MAGNETIC ATTRACTION */}
+            <MagneticButton strength={12} className="hidden lg:inline-block">
+              <Link
+                href="/#contacto"
+                className="flex px-4 py-2 bg-[#DFFF00] text-black font-tech text-xs font-bold uppercase tracking-wider hover:bg-white transition-all items-center space-x-1 border border-[#DFFF00]"
+              >
+                <span>CONTACTO</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </Link>
+            </MagneticButton>
 
             {/* HAMBURGER BUTTON (MOBILE / TABLET) */}
             <button
@@ -144,6 +147,14 @@ export default function Header({ activeSection }: HeaderProps) {
               <Menu className="w-5 h-5 text-[#DFFF00]" />
             </button>
           </div>
+        </div>
+
+        {/* BOTTOM TELEMETRY SCROLL PROGRESS BAR */}
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#1a1a1a] overflow-hidden pointer-events-none">
+          <div
+            className="h-full bg-[#DFFF00] transition-all duration-75 shadow-[0_0_8px_#DFFF00]"
+            style={{ width: `${scrollProgress}%` }}
+          />
         </div>
       </header>
 
