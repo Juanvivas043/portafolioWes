@@ -2,12 +2,13 @@
 
 import { useState, useMemo } from 'react';
 import Image from 'next/image';
-import { PHOTO_CATALOG, PhotoItem } from '@/helpers/mediaData';
-import { filterByCategory, getMasonrySpanClass } from '@/helpers/formatters';
+import { PHOTO_CATALOG, PHOTO_CATEGORY_LABELS } from '@/helpers/mediaData';
+import { filterByCategory, getMasonrySpanClass, buildCategoryFilters } from '@/helpers/formatters';
 import { useMediaModal } from '@/hooks/useMediaModal';
+import { usePagination } from '@/hooks/usePagination';
 import MediaModal from '@/components/gallery/MediaModal';
-import { FadeUp, StaggerContainer, StaggerItem } from '@/components/animations/MotionWrapper';
-import { Camera, Maximize2 } from 'lucide-react';
+import { FadeUp } from '@/components/animations/MotionWrapper';
+import { Camera, Maximize2, Plus } from 'lucide-react';
 
 interface GalleryGridProps {
   initialCategory?: string;
@@ -15,6 +16,7 @@ interface GalleryGridProps {
   limit?: number;
   title?: string;
   subtitle?: string;
+  pageSize?: number;
 }
 
 export default function GalleryGrid({
@@ -23,6 +25,7 @@ export default function GalleryGrid({
   limit,
   title = 'FOTOGRAFÍA',
   subtitle = 'SELECCIÓN DE TRABAJOS',
+  pageSize = 30,
 }: GalleryGridProps) {
   const [activeCategory, setActiveCategory] = useState<string>(initialCategory);
 
@@ -31,6 +34,11 @@ export default function GalleryGrid({
     return limit ? filtered.slice(0, limit) : filtered;
   }, [activeCategory, limit]);
 
+  const { visibleItems, visibleCount, totalCount, hasMore, remaining, showMore, showAll } =
+    usePagination(displayPhotos, { pageSize });
+
+  // El modal navega solo por lo que esta a la vista: con flechas no se puede
+  // llegar a una foto que el grid todavia no cargo.
   const {
     selectedPhoto,
     isOpen,
@@ -40,24 +48,20 @@ export default function GalleryGrid({
     closeModal,
     nextPhoto,
     prevPhoto,
-  } = useMediaModal(displayPhotos);
+  } = useMediaModal(visibleItems);
 
-  const categories = [
-    { id: 'all', label: 'Todas' },
-    { id: 'artistas', label: 'Artistas' },
-    { id: 'conciertos', label: 'Conciertos' },
-    { id: 'deportes', label: 'Deportes' },
-    { id: 'destinos', label: 'Destinos' },
-    { id: 'lifestyle', label: 'Lifestyle' },
-    { id: 'marcas', label: 'Marcas' },
-  ];
+  // Los filtros salen del catalogo: no pueden ofrecer una categoria vacia ni
+  // omitir una que si tiene fotos.
+  const categories = useMemo(
+    () => buildCategoryFilters(PHOTO_CATALOG, PHOTO_CATEGORY_LABELS, 'Todas'),
+    []
+  );
 
   return (
     <section className="py-14 bg-[#050505] relative">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
         {/* HEADER & FILTERS */}
         <FadeUp className="border-b border-[#222222] pb-5 mb-6 space-y-5">
-          {/* TITLE ROW */}
           <div className="flex items-end justify-between gap-4">
             <div className="min-w-0">
               <div className="text-[11px] font-tech text-[#DFFF00] tracking-widest uppercase mb-1 flex items-center gap-2">
@@ -69,12 +73,13 @@ export default function GalleryGrid({
               </h2>
             </div>
 
-            <span className="text-[10px] font-tech text-[#666666] uppercase tracking-widest shrink-0 pb-1">
-              {displayPhotos.length} {displayPhotos.length === 1 ? 'FOTOGRAFÍA' : 'FOTOGRAFÍAS'}
+            <span className="text-[10px] font-tech text-[#666666] uppercase tracking-widest shrink-0 pb-1 text-right">
+              {visibleCount} / {totalCount}
+              <span className="hidden sm:inline"> FOTOGRAFÍAS</span>
             </span>
           </div>
 
-          {/* CATEGORY FILTER BUTTONS — own row: horizontal scroll on phones, wraps on desktop */}
+          {/* CATEGORY FILTERS — scroll horizontal en telefono, wrap en desktop */}
           {showCategoryFilters && (
             <div className="-mx-2 px-2 overflow-x-auto sm:overflow-visible">
               <div className="flex flex-nowrap sm:flex-wrap gap-1.5 min-w-max sm:min-w-0 pb-1 sm:pb-0">
@@ -85,13 +90,16 @@ export default function GalleryGrid({
                       key={cat.id}
                       type="button"
                       onClick={() => setActiveCategory(cat.id)}
-                      className={`shrink-0 px-3 py-1.5 text-xs font-tech tracking-wider uppercase transition-all border ${
+                      className={`shrink-0 px-3 py-1.5 text-xs font-tech tracking-wider uppercase transition-all border flex items-center gap-1.5 ${
                         isActive
                           ? 'bg-[#DFFF00] text-black border-[#DFFF00] font-bold'
                           : 'bg-[#0e0e0e] text-[#888888] border-[#1f1f1f] hover:border-[#444444] hover:text-white'
                       }`}
                     >
-                      {cat.label}
+                      <span>{cat.label}</span>
+                      <span className={isActive ? 'text-black/60' : 'text-[#555555]'}>
+                        {cat.count}
+                      </span>
                     </button>
                   );
                 })}
@@ -100,30 +108,24 @@ export default function GalleryGrid({
           )}
         </FadeUp>
 
-        {/* 5-COLUMN ASYMMETRICAL EDITORIAL GRID WITH MINIMAL GAPS */}
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1.5 auto-rows-[220px] [grid-auto-flow:dense]">
-          {displayPhotos.map((photo, index) => {
+        {/* 5-COLUMN ASYMMETRICAL EDITORIAL GRID */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1.5 auto-rows-[220px] [grid-auto-flow:dense]">
+          {visibleItems.map((photo, index) => {
             const spanClass = getMasonrySpanClass(index, photo.aspectRatio);
 
             return (
-              <StaggerItem key={photo.id} className={spanClass}>
+              <div key={photo.id} className={spanClass}>
                 <button
                   type="button"
                   onClick={() => openModal(photo)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      openModal(photo);
-                    }
-                  }}
                   className="group relative bg-[#0a0a0a] border border-[#1a1a1a] hover:border-[#DFFF00] transition-all duration-300 overflow-hidden cursor-pointer text-left w-full h-full p-0 block focus:outline-none focus:border-[#DFFF00]"
                 >
-                  {/* PHOTO IMAGE IN OPTIMIZED WEBP */}
                   <Image
                     src={photo.src}
                     alt={photo.title}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 20vw"
+                    loading={index < 10 ? 'eager' : 'lazy'}
                     className="object-cover grayscale contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-500 pointer-events-none"
                   />
 
@@ -133,27 +135,47 @@ export default function GalleryGrid({
                   <div className="absolute bottom-1.5 left-1.5 w-2.5 h-2.5 border-b border-l border-[#DFFF00] opacity-0 group-hover:opacity-100 group-hover:w-3.5 group-hover:h-3.5 transition-all pointer-events-none" />
                   <div className="absolute bottom-1.5 right-1.5 w-2.5 h-2.5 border-b border-r border-[#DFFF00] opacity-0 group-hover:opacity-100 group-hover:w-3.5 group-hover:h-3.5 transition-all pointer-events-none" />
 
-                  {/* EXPAND ICON ON TOP RIGHT */}
                   <div className="absolute top-2 right-2 p-1 bg-[#0a0a0a]/90 text-white opacity-0 group-hover:opacity-100 border border-[#333333] transition-opacity pointer-events-none">
                     <Maximize2 className="w-3 h-3" />
                   </div>
 
-                  {/* MINIMAL BOTTOM OVERLAY: ONLY TITLE AND ROLE */}
+                  {/* BOTTOM OVERLAY */}
                   <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/95 via-black/75 to-transparent flex flex-col justify-end translate-y-1 group-hover:translate-y-0 transition-transform pointer-events-none">
                     <h3 className="font-editorial text-sm sm:text-base font-bold text-white tracking-tight leading-snug truncate">
                       {photo.title}
                     </h3>
                     <div className="text-[10px] font-tech text-[#DFFF00] uppercase tracking-wider pt-0.5 truncate">
-                      {photo.role || photo.categoryLabel}
+                      {photo.categoryLabel}
                     </div>
                   </div>
                 </button>
-              </StaggerItem>
+              </div>
             );
           })}
-        </StaggerContainer>
+        </div>
 
-        {/* EMPTY STATE IF NONE FOUND */}
+        {/* PAGINACIÓN POR TANDAS */}
+        {hasMore && (
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <button
+              type="button"
+              onClick={showMore}
+              className="w-full sm:w-auto px-6 py-3 bg-[#DFFF00] text-black font-tech text-xs font-bold uppercase tracking-wider hover:bg-white transition-colors flex items-center justify-center gap-2 border border-[#DFFF00]"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Cargar {Math.min(pageSize, remaining)} más</span>
+            </button>
+            <button
+              type="button"
+              onClick={showAll}
+              className="w-full sm:w-auto px-6 py-3 bg-[#0e0e0e] text-[#888888] font-tech text-xs font-bold uppercase tracking-wider border border-[#1f1f1f] hover:border-[#444444] hover:text-white transition-colors"
+            >
+              Ver las {totalCount}
+            </button>
+          </div>
+        )}
+
+        {/* EMPTY STATE */}
         {displayPhotos.length === 0 && (
           <div className="text-center py-20 border border-[#1f1f1f] bg-[#0c0c0c]">
             <Camera className="w-10 h-10 text-[#444444] mx-auto mb-3" />
@@ -169,7 +191,6 @@ export default function GalleryGrid({
         )}
       </div>
 
-      {/* FULLSCREEN HIGH-RES EXIF LIGHTBOX MODAL */}
       <MediaModal
         photo={selectedPhoto}
         isOpen={isOpen}

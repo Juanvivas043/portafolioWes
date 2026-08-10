@@ -14,49 +14,47 @@ export default function ScrollAssembleCard({
   index,
   className = '',
 }: ScrollAssembleCardProps) {
+  /**
+   * El ref va en el contenedor ESTATICO, no en el elemento animado.
+   * Si se mide un elemento que a la vez se esta trasladando y escalando, cada
+   * frame cambia su posicion, el progreso de scroll se recalcula sobre datos
+   * que el propio efecto acaba de mover y la animacion se ve a tirones.
+   */
   const ref = useRef<HTMLDivElement | null>(null);
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start end', 'center 65%'],
+    offset: ['start end', 'center 70%'],
   });
 
-  // Staggered 5-column assembly offsets
+  /**
+   * Un unico spring suaviza el progreso y de el se derivan todas las
+   * transformaciones. Antes habia cuatro springs por tarjeta (y son 17 en el
+   * grid): 68 animaciones compitiendo por el mismo frame.
+   */
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 24,
+    restDelta: 0.001,
+  });
+
+  // Desfase por columna para que el grid se arme escalonado.
   const colIndex = index % 5;
-  const offsetDistances = [100, 150, 70, 130, 110];
-  const offsetDistance = offsetDistances[colIndex] || 100;
+  const offsetDistances = [70, 96, 52, 84, 64];
+  const offsetDistance = offsetDistances[colIndex];
+  const tiltY = colIndex < 2 ? -4 : colIndex > 2 ? 4 : 0;
 
-  // Parallax Y elevation translation
-  const rawY = useTransform(scrollYProgress, [0, 1], [offsetDistance, 0]);
-  const y = useSpring(rawY, { stiffness: 120, damping: 18 });
-
-  // Scale expansion on assembly
-  const rawScale = useTransform(scrollYProgress, [0, 1], [0.84, 1]);
-  const scale = useSpring(rawScale, { stiffness: 120, damping: 18 });
-
-  // 3D perspective angle tilt on assembly
-  const rawRotateX = useTransform(scrollYProgress, [0, 1], [14, 0]);
-  const rotateX = useSpring(rawRotateX, { stiffness: 120, damping: 18 });
-
-  const rawRotateY = useTransform(scrollYProgress, [0, 1], [colIndex < 2 ? -6 : colIndex > 2 ? 6 : 0, 0]);
-  const rotateY = useSpring(rawRotateY, { stiffness: 120, damping: 18 });
-
-  // Fade from dark into full exposure
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [0.15, 1]);
+  const y = useTransform(progress, [0, 1], [offsetDistance, 0]);
+  const scale = useTransform(progress, [0, 1], [0.92, 1]);
+  const rotateX = useTransform(progress, [0, 1], [8, 0]);
+  const rotateY = useTransform(progress, [0, 1], [tiltY, 0]);
+  const opacity = useTransform(progress, [0, 0.55], [0.35, 1]);
 
   return (
-    <div style={{ perspective: '1200px' }} className={`w-full h-full ${className}`}>
+    <div ref={ref} style={{ perspective: '1200px' }} className={`w-full h-full ${className}`}>
       <motion.div
-        ref={ref}
-        style={{
-          y,
-          scale,
-          rotateX,
-          rotateY,
-          opacity,
-          transformStyle: 'preserve-3d',
-        }}
-        className="w-full h-full will-change-transform"
+        style={{ y, scale, rotateX, rotateY, opacity }}
+        className="w-full h-full will-change-transform [transform-style:preserve-3d]"
       >
         {children}
       </motion.div>

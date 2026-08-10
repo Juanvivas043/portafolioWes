@@ -6,8 +6,24 @@ import { ArrowUpRight, Camera, Film } from 'lucide-react';
 import { FadeUp, StaggerContainer, StaggerItem } from '@/components/animations/MotionWrapper';
 import ScrollDrawLine from '@/components/animations/ScrollDrawLine';
 import MagneticButton from '@/components/animations/MagneticButton';
+import {
+  PHOTO_CATALOG,
+  VIDEO_CATALOG,
+  PHOTO_CATEGORY_LABELS,
+  getFeaturedPhoto,
+  VIDEO_CATEGORY_LABELS,
+} from '@/helpers/mediaData';
+import { buildCategoryFilters } from '@/helpers/formatters';
 
 export default function ProyectosPreview() {
+  // Categorias y conteos derivados del catalogo: no pueden contradecir lo que
+  // el visitante encuentra despues en la galeria.
+  const photoCategories = buildCategoryFilters(PHOTO_CATALOG, PHOTO_CATEGORY_LABELS).slice(1);
+  const videoCategories = buildCategoryFilters(VIDEO_CATALOG, VIDEO_CATEGORY_LABELS).slice(1);
+
+  const photoCover = getFeaturedPhoto('conciertos');
+  const videoCover = getFeaturedPhoto('marcas');
+
   return (
     <section id="proyectos" className="py-20 bg-[#050505] border-b border-[#222222] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -40,13 +56,13 @@ export default function ProyectosPreview() {
                 <Camera className="w-4 h-4 text-[#DFFF00]" />
                 <span>FOTOGRAFÍA</span>
               </div>
-              <span className="text-[#DFFF00]">6 CATEGORÍAS</span>
+              <span className="text-[#DFFF00]">{PHOTO_CATALOG.length} FOTOGRAFÍAS</span>
             </div>
 
             {/* PREVIEW IMAGE WITH HOVER REVEAL */}
             <div className="relative aspect-[16/10] bg-black overflow-hidden border border-[#1f1f1f]">
               <Image
-                src="/media/imagenes/conciertos/DOBLEU_-01.webp"
+                src={photoCover?.src ?? ''}
                 alt="Fotografía Profesional"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -73,9 +89,9 @@ export default function ProyectosPreview() {
 
               {/* CATEGORIES PILLS */}
               <div className="flex flex-wrap gap-1.5 text-[10px] font-tech text-[#888888]">
-                {['Artistas', 'Conciertos', 'Deportes', 'Destinos', 'Lifestyle', 'Marcas'].map((cat) => (
-                  <span key={cat} className="px-2 py-0.5 bg-[#141414] border border-[#222222]">
-                    {cat}
+                {photoCategories.map((cat) => (
+                  <span key={cat.id} className="px-2 py-0.5 bg-[#141414] border border-[#222222]">
+                    {cat.label} {cat.count}
                   </span>
                 ))}
               </div>
@@ -99,15 +115,15 @@ export default function ProyectosPreview() {
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#1f1f1f] text-[11px] font-tech text-[#888888]">
               <div className="flex items-center space-x-2 text-white font-bold">
                 <Film className="w-4 h-4 text-[#DFFF00]" />
-                <span>CINEMATOGRAFÍA</span>
+                <span>VIDEO</span>
               </div>
-              <span className="text-[#DFFF00]">6 CATEGORÍAS</span>
+              <span className="text-[#DFFF00]">{VIDEO_CATALOG.length} VIDEOS</span>
             </div>
 
             {/* PREVIEW VIDEO / POSTER WITH HOVER REVEAL */}
             <div className="relative aspect-[16/10] bg-black overflow-hidden border border-[#1f1f1f]">
               <Image
-                src="/media/imagenes/marcas/DOBLEU_-040.JPG.webp"
+                src={videoCover?.src ?? ''}
                 alt="Cinematografía Profesional"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -134,9 +150,9 @@ export default function ProyectosPreview() {
 
               {/* CATEGORIES PILLS */}
               <div className="flex flex-wrap gap-1.5 text-[10px] font-tech text-[#888888]">
-                {['Videoclips', 'Marcas', 'Redes Sociales', 'Conciertos', 'Deportes', 'Documental'].map((cat) => (
-                  <span key={cat} className="px-2 py-0.5 bg-[#141414] border border-[#222222]">
-                    {cat}
+                {videoCategories.map((cat) => (
+                  <span key={cat.id} className="px-2 py-0.5 bg-[#141414] border border-[#222222]">
+                    {cat.label} {cat.count}
                   </span>
                 ))}
               </div>

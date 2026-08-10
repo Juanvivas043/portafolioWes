@@ -75,6 +75,46 @@ export function filterVideosByCategory<T extends { category: string }>(items: re
   return filterByCategory(items, category);
 }
 
+export interface CategoryFilter {
+  id: string;
+  label: string;
+  count: number;
+}
+
+/**
+ * Construye la lista de filtros A PARTIR del catalogo, no a mano.
+ *
+ * Las listas escritas a mano se desincronizan: al anadir un video de la
+ * categoria "destinos" el filtro seguia sin ofrecerla y esa pieza quedaba
+ * inalcanzable. Aqui solo aparecen las categorias que de verdad tienen piezas,
+ * cada una con su conteo.
+ */
+export function buildCategoryFilters<T extends { category: string }>(
+  items: readonly T[],
+  labels: Readonly<Record<string, string>>,
+  allLabel: string = 'Todas'
+): CategoryFilter[] {
+  const counts = new Map<string, number>();
+  for (const item of items) {
+    counts.set(item.category, (counts.get(item.category) ?? 0) + 1);
+  }
+
+  // Respeta el orden declarado en el mapa de etiquetas; lo no declarado va al final.
+  const declared = Object.keys(labels).filter((id) => counts.has(id));
+  const undeclared = Array.from(counts.keys())
+    .filter((id) => !(id in labels))
+    .sort();
+
+  return [
+    { id: 'all', label: allLabel, count: items.length },
+    ...[...declared, ...undeclared].map((id) => ({
+      id,
+      label: labels[id] ?? id,
+      count: counts.get(id) ?? 0,
+    })),
+  ];
+}
+
 /**
  * Calculate dynamic 5-column masonry span classes for asymmetric editorial layout.
  * Uses grid-auto-flow:dense to fill gaps automatically.

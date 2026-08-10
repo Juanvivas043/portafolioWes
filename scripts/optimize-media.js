@@ -39,6 +39,9 @@ async function main() {
         await sharp(inputPath)
           .rotate() // Auto-orient from EXIF
           .resize({ width: 2560, height: 2560, fit: 'inside', withoutEnlargement: true })
+          // Conserva EXIF: los .webp actuales lo perdieron, por eso los datos de
+          // camara/lente/ISO del modal no se pueden contrastar con el archivo.
+          .withMetadata()
           .webp({ quality: 85, effort: 4 })
           .toFile(outputPath);
 

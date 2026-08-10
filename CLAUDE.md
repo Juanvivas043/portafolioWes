@@ -137,6 +137,9 @@ nuevos:
 - **Cifras verificables.** Cuando un número se pueda derivar del catálogo,
   derívalo (`PHOTO_CATALOG.length`, `ARTIST_PROFILE.clients.length`) en lugar de
   escribirlo a mano y arriesgar que se contradiga con otra sección.
+- **Nada de datos técnicos que no se puedan medir del archivo.** Duración,
+  proporción y portada de cada video salen de `ffmpeg`; si vas a añadir un dato
+  técnico nuevo, primero compruébalo contra el archivo real.
 
 ---
 
@@ -198,15 +201,47 @@ Prioridad crítica; no negociable.
   - `Accept-Ranges: bytes` (habilita `206 Partial Content`)
   - `src/helpers/streamHelpers.ts` tiene `parseRange()` y `getMimeType()` puros,
     listos si se implementa un route handler de streaming propio.
-- **Formatos canónicos:** imágenes `.webp` (máx. 2560 px, calidad 85), videos
-  `.webm` VP9/Opus. Un `.mp4` sobrevive como fallback del loop del Hero.
+- **Formatos canónicos:** imágenes `.webp` (máx. 2560 px, calidad 88, con EXIF),
+  videos `.webm` VP9/Opus con el **lado mayor a 1280 px**. Un `.mp4` sobrevive
+  como fallback del loop del Hero.
+  - Los videos no se codifican a 1080p a propósito: el reproductor vive dentro
+    de un modal de 1024 px, así que 1080p gastaba el doble de bytes en píxeles
+    que nadie llega a ver. Medido sobre el material más difícil del catálogo,
+    1080p pesaba 43 MB por 45 s frente a 25 MB en 720p.
+- **Paginación obligatoria en los grids.** El catálogo pasa de 300 piezas; los
+  grids montan tandas con `usePagination` (30 fotos / 24 videos) y un botón de
+  cargar más. No renderices el catálogo completo de golpe.
 
 ---
 
-## 7. Datos: `src/helpers/mediaData.ts`
+## 7. Datos: catálogo generado desde los archivos
 
-Fuente única de verdad del contenido. Es un archivo grande (~790 líneas) y
-**cualquier medio nuevo debe registrarse aquí** o no aparece en el sitio.
+El catálogo **ya no se escribe a mano**. Se genera leyendo los medios reales:
+
+| Archivo | Qué es | ¿Se edita a mano? |
+| ------- | ------ | ----------------- |
+| `src/helpers/mediaData.ts` | Tipos, `ARTIST_PROFILE`, etiquetas de categoría y helpers | Sí |
+| `src/helpers/generatedCatalog.ts` | `PHOTO_CATALOG` y `VIDEO_CATALOG` | **No** — lo pisa el script |
+| `src/helpers/catalogOverrides.json` | Títulos, descripciones y clientes propios por `id` | Sí |
+
+Flujo para añadir medios:
+
+1. Deja los originales en `public/media/images/<CATEGORÍA>/` o
+   `public/media/videos/<CATEGORÍA>/` (nombres en mayúsculas como vienen del
+   disco: `ARTISTAS`, `CONCIERTOS Y FIESTAS`, `REDES SOCIALES`…).
+2. `node scripts/import-media.js` — convierte a `.webp` / `.webm` en las
+   carpetas canónicas en minúscula y con nombres slug.
+3. `node scripts/generate-video-posters.js` — un fotograma real por video.
+4. `node scripts/generate-catalog.js` — reescribe `generatedCatalog.ts`.
+
+**De dónde sale cada dato.** Todo lo obligatorio se mide del archivo, así que no
+puede contradecirlo: dimensiones y orientación con sharp; cámara, óptica, focal,
+apertura, obturación, ISO y año con el EXIF real de la foto; duración y
+resolución de cada video con ffmpeg. Lo que no se puede deducir del archivo
+(título propio, descripción, cliente) es **opcional** y se pone en
+`catalogOverrides.json`, que sobrevive a las regeneraciones.
+
+Nunca escribas a mano un dato técnico: si no sale del archivo, no va.
 
 - `PhotoItem` / `PHOTO_CATALOG` — categorías: `artistas`, `conciertos`,
   `deportes`, `destinos`, `lifestyle`, `marcas`. Incluye metadatos EXIF
@@ -240,11 +275,18 @@ No están en `package.json`; se corren con `node scripts/<archivo>.js`.
 
 | Script                   | Qué hace                                                                  |
 | ------------------------ | ------------------------------------------------------------------------- |
+| `import-media.js`        | **El principal.** Convierte los originales de `images/<CATEGORÍA>` y `videos/<CATEGORÍA>` a `.webp` (2560 px, q88, conserva EXIF) y `.webm` (VP9/Opus, lado mayor 1280). Reanudable: salta lo que ya está al día. Acepta `--fotos` / `--videos`. |
+| `generate-catalog.js`    | Reescribe `src/helpers/generatedCatalog.ts` con los datos medidos de cada archivo. |
 | `setup-media.js`         | Copia originales desde una ruta local de OneDrive a `public/media/…`. **La ruta origen está hardcodeada a la máquina del usuario.** |
-| `optimize-media.js`      | jpg/png/heic → `.webp` con sharp (máx 2560 px, q85, auto-orient EXIF).     |
-| `optimize-videos.js`     | Cualquier video → `.webm` VP9/Opus con ffmpeg-static.                      |
+| `optimize-media.js`      | Versión antigua, solo fotos. Usa `import-media.js`.                       |
+| `optimize-videos.js`     | Versión antigua, solo videos. Usa `import-media.js`.                      |
 | `optimize-hero-video.js` | Genera el loop de fondo del Hero (`videos/hero/hero_bg_loop.webm` + `.mp4`). |
 | `cleanup-old-media.js`   | **Destructivo:** borra los originales sin optimizar. Confirma antes de correrlo. |
+| `generate-video-posters.js` | Extrae un fotograma real de cada video (al 15% de su duración) y lo guarda en `public/media/imagenes/posters/<categoria>/`. Imprime además la duración real de cada archivo. |
+
+**Correr un script mientras `npm run dev` está activo rompe el dev server:**
+`next build` y `next dev` comparten el directorio `.next` y se sobrescriben.
+Si pasa, para el dev server, borra `.next` y arranca de nuevo.
 
 ---
 
@@ -287,7 +329,17 @@ sigue en el repo pero **no se usa** en ninguna pantalla.
 **Hooks** — `useMediaModal` (selección, navegación con flechas, `Escape`,
 bloqueo de scroll del body), `useVideoPlayer` (play/pause, tiempo, volumen,
 buffering, fullscreen, manejo seguro de la promesa de `play()`),
-`useFilterCategory`, `useScrollPosition`.
+`usePagination` (tandas del grid), `useFilterCategory`, `useScrollPosition`.
+
+**`useVideoPlayer` monta los listeners contra un nodo en estado, no contra el
+ref.** El `<video>` aparece después que el hook (el modal devuelve `null`
+mientras está cerrado); un `useEffect` con `[]` se ejecutaba contra un ref vacío
+y la barra de progreso no avanzaba nunca. No lo vuelvas a `useRef` a secas.
+
+**Los filtros se construyen con `buildCategoryFilters`**, que los deriva del
+catálogo. Nunca escribas la lista de categorías a mano: cuando se añadió el
+primer video de `destinos`, el filtro escrito a mano no la ofrecía y esa pieza
+quedó inalcanzable.
 
 ---
 

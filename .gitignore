@@ -62,6 +62,14 @@ next-env.d.ts
 /public/media/**/*.mov
 /public/media/**/*.avi
 /public/media/**/*.mkv
+
+# Los .mp4 en crudo tambien son originales. La unica excepcion es el fallback
+# del loop del Hero, que si forma parte del sitio publicado.
+/public/media/**/*.mp4
+!/public/media/videos/hero/hero_bg_loop.mp4
+
+# Basura de macOS que viaja al copiar desde un Mac (resource forks)
+._*
 /public/media/**/*.arw
 /public/media/**/*.cr2
 /public/media/**/*.dng

@@ -1,6 +1,11 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import CustomCursor from '@/components/layout/CustomCursor';
+import { getFeaturedPhoto } from '@/helpers/mediaData';
+
+// La imagen para compartir sale del catalogo, no de una ruta fija que se rompe
+// cada vez que se reoptimiza la libreria de medios.
+const OG_IMAGE = getFeaturedPhoto('artistas')?.src ?? '/media/imagenes/artistas/dobleu-10.webp';
 
 export const metadata: Metadata = {
   title: 'WES — Fotografía & Dirección de Cine Audiovisual',
@@ -23,7 +28,7 @@ export const metadata: Metadata = {
     locale: 'es_ES',
     images: [
       {
-        url: '/media/imagenes/artistas/DOBLEU_-11.webp',
+        url: OG_IMAGE,
         width: 1200,
         height: 800,
         alt: 'WES Fotografía & Cinematografía',

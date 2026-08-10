@@ -1,3 +1,13 @@
+/**
+ * Genera el loop de fondo del Hero a partir de un video del catalogo.
+ *
+ * IMPORTANTE: conserva la pista de audio. La version anterior encodeaba con
+ * -an, asi que el boton de sonido del Hero no podia funcionar: no habia audio
+ * que activar. Tambien usaba -crf 36 junto a un techo de -b:v 1400k, lo que
+ * dejaba la imagen visiblemente blanda; ahora va en modo calidad constante.
+ *
+ * Uso: node scripts/optimize-hero-video.js
+ */
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
@@ -32,53 +42,52 @@ function runFfmpeg(args) {
 }
 
 async function main() {
-  console.log('Generating ultra-lightweight Hero Background Loop...');
-  console.log('Source:', inputVideo);
+  console.log('Generando el loop de fondo del Hero...');
+  console.log('Fuente:', inputVideo);
 
-  // 1. WebM VP9 (Stripped audio, 1080p, keyframes every 24 frames = 1s, high compression)
-  console.log('\n[1/2] Encoding hero_bg_loop.webm...');
+  // 1. WebM VP9 en modo calidad constante (-b:v 0), con audio Opus.
+  console.log('\n[1/2] Codificando hero_bg_loop.webm...');
   const webmArgs = [
     '-y',
     '-i', inputVideo,
-    '-vf', "scale='min(1920,iw)':-2",
     '-c:v', 'libvpx-vp9',
-    '-crf', '36',
-    '-b:v', '1400k',
+    '-crf', '38',
+    '-b:v', '0',          // CQ puro: sin techo de bitrate que aplaste el detalle
     '-threads', '0',
     '-row-mt', '1',
-    '-cpu-used', '8',
+    '-cpu-used', '3',
     '-deadline', 'good',
-    '-g', '24',
+    '-g', '48',
     '-pix_fmt', 'yuv420p',
-    '-an', // No audio needed for background hero loop
+    '-c:a', 'libopus',
+    '-b:a', '128k',
     outputWebm
   ];
   await runFfmpeg(webmArgs);
   const webmSize = (fs.statSync(outputWebm).size / (1024 * 1024)).toFixed(2);
-  console.log(`[SUCCESS] hero_bg_loop.webm generated: ${webmSize} MB`);
+  console.log(`[OK] hero_bg_loop.webm: ${webmSize} MB`);
 
-  // 2. MP4 H.264 FastStart (Instant hardware decode & fallback)
-  console.log('\n[2/2] Encoding hero_bg_loop.mp4 (FastStart)...');
+  // 2. MP4 H.264 con faststart, para navegadores sin VP9. Tambien con audio.
+  console.log('\n[2/2] Codificando hero_bg_loop.mp4...');
   const mp4Args = [
     '-y',
     '-i', inputVideo,
-    '-vf', "scale='min(1920,iw)':-2",
     '-c:v', 'libx264',
-    '-preset', 'veryfast',
-    '-crf', '26',
+    '-preset', 'slow',
+    '-crf', '28',
     '-movflags', '+faststart',
-    '-g', '24',
+    '-g', '48',
     '-pix_fmt', 'yuv420p',
-    '-an',
+    '-c:a', 'aac',
+    '-b:a', '128k',
     outputMp4
   ];
   await runFfmpeg(mp4Args);
   const mp4Size = (fs.statSync(outputMp4).size / (1024 * 1024)).toFixed(2);
-  console.log(`[SUCCESS] hero_bg_loop.mp4 generated: ${mp4Size} MB`);
+  console.log(`[OK] hero_bg_loop.mp4: ${mp4Size} MB`);
 
   console.log('\n========================================');
-  console.log('HERO BACKGROUND LOOP READY!');
-  console.log(`WebM: ${webmSize} MB | MP4: ${mp4Size} MB`);
+  console.log(`WebM: ${webmSize} MB | MP4: ${mp4Size} MB (ambos con audio)`);
   console.log('========================================\n');
 }
 

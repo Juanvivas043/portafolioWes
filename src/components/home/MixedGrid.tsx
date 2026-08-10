@@ -7,7 +7,7 @@ import { getMasonrySpanClass } from '@/helpers/formatters';
 import { useMediaModal } from '@/hooks/useMediaModal';
 import MediaModal from '@/components/gallery/MediaModal';
 import VideoModal from '@/components/gallery/VideoModal';
-import { FadeUp, StaggerContainer, StaggerItem } from '@/components/animations/MotionWrapper';
+import { FadeUp } from '@/components/animations/MotionWrapper';
 import ScrollDrawLine from '@/components/animations/ScrollDrawLine';
 import ScrollAssembleCard from '@/components/animations/ScrollAssembleCard';
 import { Camera, Film, Maximize2, Play } from 'lucide-react';
@@ -97,15 +97,21 @@ export default function MixedGrid({ photoLimit = 10, videoLimit = 7 }: MixedGrid
         {/* BLUEPRINT DRAW LINE UNDER HEADER */}
         <ScrollDrawLine color="#222222" className="mb-6" />
 
-        {/* MIXED 5-COLUMN STAGGERED GRID WITH SCROLL ASSEMBLY PARALLAX */}
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1.5 auto-rows-[220px] [grid-auto-flow:dense]">
+        {/*
+          MIXED 5-COLUMN GRID WITH SCROLL ASSEMBLY PARALLAX.
+          El reveal lo hace SOLO ScrollAssembleCard. Antes cada celda iba ademas
+          envuelta en StaggerItem, que animaba un filter: blur sobre la misma
+          imagen: dos animaciones peleando por el mismo nodo y un blur costoso
+          en 17 imagenes grandes. De ahi venian los tirones.
+        */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1.5 auto-rows-[220px] [grid-auto-flow:dense]">
           {mixedItems.map((item, index) => {
             const spanClass = getMasonrySpanClass(index);
 
             if (item.kind === 'photo') {
               const photo = item.data;
               return (
-                <StaggerItem key={photo.id} className={spanClass}>
+                <div key={photo.id} className={spanClass}>
                   <ScrollAssembleCard index={index} className="w-full h-full">
                     <button
                       type="button"
@@ -137,19 +143,19 @@ export default function MixedGrid({ photoLimit = 10, videoLimit = 7 }: MixedGrid
                           {photo.title}
                         </h3>
                         <div className="text-[10px] font-tech text-[#DFFF00] uppercase tracking-wider pt-0.5 truncate">
-                          {photo.role || photo.categoryLabel}
+                          {photo.categoryLabel}
                         </div>
                       </div>
                     </button>
                   </ScrollAssembleCard>
-                </StaggerItem>
+                </div>
               );
             }
 
             // VIDEO ITEM
             const video = item.data;
             return (
-              <StaggerItem key={video.id} className={spanClass}>
+              <div key={video.id} className={spanClass}>
                 <ScrollAssembleCard index={index} className="w-full h-full">
                   <button
                     type="button"
@@ -183,15 +189,15 @@ export default function MixedGrid({ photoLimit = 10, videoLimit = 7 }: MixedGrid
                         {video.title}
                       </h3>
                       <div className="text-[10px] font-tech text-[#DFFF00] uppercase tracking-wider pt-0.5 truncate">
-                        {video.role}
+                        {video.categoryLabel}
                       </div>
                     </div>
                   </button>
                 </ScrollAssembleCard>
-              </StaggerItem>
+              </div>
             );
           })}
-        </StaggerContainer>
+        </div>
       </div>
 
       {/* LIGHTBOX MODALS */}

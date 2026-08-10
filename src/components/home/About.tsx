@@ -2,13 +2,15 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ARTIST_PROFILE, PHOTO_CATALOG, VIDEO_CATALOG } from '@/helpers/mediaData';
+import { ARTIST_PROFILE, PHOTO_CATALOG, VIDEO_CATALOG, getFeaturedPhoto } from '@/helpers/mediaData';
 import { Sliders } from 'lucide-react';
 import { FadeUp, StaggerContainer, StaggerItem } from '@/components/animations/MotionWrapper';
 import ScrollDrawLine from '@/components/animations/ScrollDrawLine';
 import CounterStat from '@/components/animations/CounterStat';
 
 export default function About() {
+  const portrait = getFeaturedPhoto('artistas', 1);
+
   return (
     <section id="about" className="py-16 sm:py-24 bg-[#080808] border-b border-[#222222] relative overflow-hidden">
       {/* BACKGROUND DECORATIVE GRID LINES */}
@@ -81,7 +83,7 @@ export default function About() {
 
               <div className="relative aspect-[3/4] bg-black overflow-hidden border border-[#1f1f1f]">
                 <Image
-                  src="/media/imagenes/artistas/DOBLEU_-13.webp"
+                  src={portrait?.src ?? ''}
                   alt="WES Director y Fotógrafo"
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"

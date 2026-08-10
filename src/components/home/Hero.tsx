@@ -5,11 +5,13 @@ import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown, ArrowUpRight, Camera, Film, Volume2, VolumeX } from 'lucide-react';
 import MagneticButton from '@/components/animations/MagneticButton';
+import { getFeaturedPhoto } from '@/helpers/mediaData';
 
 export default function Hero() {
   const [isAudioMuted, setIsAudioMuted] = useState(true);
   const [timecode, setTimecode] = useState('00:00:00:00');
   const sectionRef = useRef<HTMLElement | null>(null);
+  const heroPoster = getFeaturedPhoto('artistas');
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -53,7 +55,7 @@ export default function Hero() {
           playsInline
           preload="auto"
           disablePictureInPicture
-          poster="/media/imagenes/artistas/DOBLEU_-11.webp"
+          poster={heroPoster?.src}
           className="w-full h-full object-cover grayscale contrast-125 opacity-55"
         >
           <source src="/media/videos/hero/hero_bg_loop.webm" type="video/webm" />
@@ -85,6 +87,7 @@ export default function Hero() {
       <button
         onClick={() => setIsAudioMuted(!isAudioMuted)}
         className="absolute bottom-14 right-4 sm:right-5 z-30 p-2 bg-black/60 hover:bg-[#DFFF00] hover:text-black text-white border border-[#333333] hover:border-[#DFFF00] transition-all backdrop-blur-sm"
+        aria-label={isAudioMuted ? 'Activar audio' : 'Silenciar'}
         title={isAudioMuted ? 'Activar audio' : 'Silenciar'}
       >
         {isAudioMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}

@@ -27,6 +27,10 @@ export default function MediaModal({
 }: MediaModalProps) {
   if (!isOpen || !photo) return null;
 
+  const hasExif = Boolean(
+    photo.camera || photo.lens || photo.aperture || photo.focalLength || photo.shutter || photo.iso
+  );
+
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-xl p-2 sm:p-6 overflow-y-auto">
       {/* BACKDROP CLICK */}
@@ -106,63 +110,98 @@ export default function MediaModal({
               </div>
 
               {/* DESCRIPTION */}
-              <p className="text-xs text-[#a0a0a0] font-sans leading-relaxed border-l border-[#333333] pl-3">
-                {photo.description}
-              </p>
+              {photo.description && (
+                <p className="text-xs text-[#a0a0a0] font-sans leading-relaxed border-l border-[#333333] pl-3">
+                  {photo.description}
+                </p>
+              )}
 
-              {/* TECHNICAL EXIF SPECS TABLE */}
-              <div className="space-y-2 pt-3 border-t border-[#1f1f1f]">
-                <div className="text-[10px] font-tech text-[#666666] uppercase tracking-widest flex items-center gap-1.5">
-                  <Camera className="w-3 h-3 text-[#DFFF00]" />
-                  <span>FICHA TÉCNICA</span>
-                </div>
+              {/*
+                FICHA TÉCNICA — sale del EXIF real del archivo. Cada dato se
+                muestra solo si existe: antes se pintaban etiquetas fijas y una
+                foto sin ese metadato acababa mostrando "ƒ/undefined".
+              */}
+              {hasExif && (
+                <div className="space-y-2 pt-3 border-t border-[#1f1f1f]">
+                  <div className="text-[10px] font-tech text-[#666666] uppercase tracking-widest flex items-center gap-1.5">
+                    <Camera className="w-3 h-3 text-[#DFFF00]" />
+                    <span>FICHA TÉCNICA</span>
+                  </div>
 
-                <div className="grid grid-cols-2 gap-2 text-[11px] font-tech">
-                  <div className="p-2 bg-[#0e0e0e] border border-[#1a1a1a]">
-                    <div className="text-[#666666] text-[9px]">CÁMARA</div>
-                    <div className="text-white font-bold truncate">{photo.camera}</div>
+                  <div className="grid grid-cols-2 gap-2 text-[11px] font-tech">
+                    {photo.camera && (
+                      <div className="p-2 bg-[#0e0e0e] border border-[#1a1a1a]">
+                        <div className="text-[#666666] text-[9px]">CÁMARA</div>
+                        <div className="text-white font-bold truncate">{photo.camera}</div>
+                      </div>
+                    )}
+                    {photo.lens && (
+                      <div className="p-2 bg-[#0e0e0e] border border-[#1a1a1a]">
+                        <div className="text-[#666666] text-[9px]">LENTE</div>
+                        <div className="text-white font-bold truncate">{photo.lens}</div>
+                      </div>
+                    )}
+                    {(photo.aperture || photo.focalLength) && (
+                      <div className="p-2 bg-[#0e0e0e] border border-[#1a1a1a]">
+                        <div className="text-[#666666] text-[9px]">APERTURA & FOCAL</div>
+                        <div className="text-[#DFFF00] font-bold">
+                          {[photo.aperture ? `ƒ/${photo.aperture}` : null, photo.focalLength]
+                            .filter(Boolean)
+                            .join(' • ')}
+                        </div>
+                      </div>
+                    )}
+                    {(photo.shutter || photo.iso) && (
+                      <div className="p-2 bg-[#0e0e0e] border border-[#1a1a1a]">
+                        <div className="text-[#666666] text-[9px]">VELOCIDAD & ISO</div>
+                        <div className="text-white font-bold">
+                          {[photo.shutter, photo.iso ? `ISO ${photo.iso}` : null]
+                            .filter(Boolean)
+                            .join(' • ')}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="p-2 bg-[#0e0e0e] border border-[#1a1a1a]">
-                    <div className="text-[#666666] text-[9px]">LENTE</div>
-                    <div className="text-white font-bold truncate">{photo.lens}</div>
-                  </div>
-                  <div className="p-2 bg-[#0e0e0e] border border-[#1a1a1a]">
-                    <div className="text-[#666666] text-[9px]">APERTURA & FOCAL</div>
-                    <div className="text-[#DFFF00] font-bold">ƒ/{photo.aperture} • {photo.focalLength}</div>
-                  </div>
-                  <div className="p-2 bg-[#0e0e0e] border border-[#1a1a1a]">
-                    <div className="text-[#666666] text-[9px]">VELOCIDAD & ISO</div>
-                    <div className="text-white font-bold">{photo.shutter} • ISO {photo.iso}</div>
-                  </div>
-                </div>
 
-                {/* LOCATION & CLIENT */}
-                <div className="space-y-1.5 pt-2 text-xs font-tech text-[#888888]">
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="w-3.5 h-3.5 text-[#DFFF00]" />
-                    <span>{photo.location}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Calendar className="w-3.5 h-3.5 text-[#DFFF00]" />
-                    <span>Año: {photo.year}</span>
-                  </div>
-                  {photo.client && (
+                  <div className="space-y-1.5 pt-2 text-xs font-tech text-[#888888]">
+                    {photo.location && (
+                      <div className="flex items-center space-x-2">
+                        <MapPin className="w-3.5 h-3.5 text-[#DFFF00]" />
+                        <span>{photo.location}</span>
+                      </div>
+                    )}
+                    {photo.year && (
+                      <div className="flex items-center space-x-2">
+                        <Calendar className="w-3.5 h-3.5 text-[#DFFF00]" />
+                        <span>Año: {photo.year}</span>
+                      </div>
+                    )}
+                    {photo.client && (
+                      <div className="flex items-center space-x-2">
+                        <User className="w-3.5 h-3.5 text-[#DFFF00]" />
+                        <span>Cliente: {photo.client}</span>
+                      </div>
+                    )}
                     <div className="flex items-center space-x-2">
-                      <User className="w-3.5 h-3.5 text-[#DFFF00]" />
-                      <span>Cliente: {photo.client}</span>
+                      <Crosshair className="w-3.5 h-3.5 text-[#DFFF00]" />
+                      <span>
+                        {photo.width} × {photo.height} px
+                      </span>
                     </div>
-                  )}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* TAGS */}
-              <div className="flex flex-wrap gap-1 pt-2">
-                {photo.tags.map((t) => (
-                  <span key={t} className="px-2 py-0.5 bg-[#121212] text-[10px] font-tech text-[#888888] border border-[#1f1f1f]">
-                    #{t}
-                  </span>
-                ))}
-              </div>
+              {photo.tags && photo.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1 pt-2">
+                  {photo.tags.map((t) => (
+                    <span key={t} className="px-2 py-0.5 bg-[#121212] text-[10px] font-tech text-[#888888] border border-[#1f1f1f]">
+                      #{t}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* ACTION CTA */}
