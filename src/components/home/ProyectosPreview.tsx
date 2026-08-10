@@ -16,14 +16,14 @@ export default function ProyectosPreview() {
           <div>
             <div className="text-[11px] font-tech text-[#DFFF00] tracking-widest uppercase mb-1 flex items-center gap-2">
               <span className="w-3 h-px bg-[#DFFF00]" />
-              EXPLORACIÓN DISCIPLINARIA
+              GALERÍAS
             </div>
             <h2 className="font-editorial text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
-              PROYECTOS & DISCIPLINAS
+              PROYECTOS
             </h2>
           </div>
           <p className="text-xs font-tech text-[#888888] max-w-sm">
-            Selecciona una rama para acceder a su galería de 5 columnas con filtrado instantáneo y streaming en alta resolución.
+            Elige una galería para ver el trabajo completo, con filtros por categoría.
           </p>
         </FadeUp>
 
@@ -40,7 +40,7 @@ export default function ProyectosPreview() {
                 <Camera className="w-4 h-4 text-[#DFFF00]" />
                 <span>FOTOGRAFÍA</span>
               </div>
-              <span className="text-[#DFFF00]">6 CATEGORÍAS DISPONIBLES</span>
+              <span className="text-[#DFFF00]">6 CATEGORÍAS</span>
             </div>
 
             {/* PREVIEW IMAGE WITH HOVER REVEAL */}
@@ -53,16 +53,6 @@ export default function ProyectosPreview() {
                 className="object-cover grayscale contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700"
               />
 
-              {/* OVERLAY RETICLE */}
-              <div className="absolute inset-0 pointer-events-none p-4 flex flex-col justify-between">
-                <div className="flex justify-between text-[9px] font-tech text-white bg-black/60 px-2 py-1 self-start border border-[#333333]">
-                  <span>STILL RESOLUTION: 33MP RAW</span>
-                </div>
-                <div className="text-[9px] font-tech text-[#DFFF00] bg-black/80 px-2 py-1 self-end border border-[#333333]">
-                  EXIF VERIFICADO
-                </div>
-              </div>
-
               {/* CORNER BRACKETS */}
               <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-[#DFFF00] opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-[#DFFF00] opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -74,10 +64,10 @@ export default function ProyectosPreview() {
             <div className="pt-5 space-y-4">
               <div>
                 <h3 className="font-editorial text-2xl font-bold text-white tracking-tight group-hover:text-[#DFFF00] transition-colors">
-                  PORTAFOLIO DE FOTOGRAFÍA
+                  FOTOGRAFÍA
                 </h3>
                 <p className="text-xs text-[#999999] font-sans leading-relaxed mt-1">
-                  Retratos editoriales, cobertura de festivales masivos, deportes de combate, campañas comerciales y paisajes con líneas de horizonte perfectas.
+                  Retratos, conciertos, deportes, paisajes y campañas de marca.
                 </p>
               </div>
 
@@ -96,7 +86,7 @@ export default function ProyectosPreview() {
                   href="/proyectos/fotografia"
                   className="w-full py-3 bg-[#171717] hover:bg-[#DFFF00] text-white hover:text-black font-tech text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center space-x-2 border border-[#2a2a2a] hover:border-[#DFFF00] transition-all"
                 >
-                  <span>VER GALERÍA DE FOTOS</span>
+                  <span>VER GALERÍA</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </Link>
               </MagneticButton>
@@ -111,7 +101,7 @@ export default function ProyectosPreview() {
                 <Film className="w-4 h-4 text-[#DFFF00]" />
                 <span>CINEMATOGRAFÍA</span>
               </div>
-              <span className="text-[#DFFF00]">STREAMING HTTP 206</span>
+              <span className="text-[#DFFF00]">6 CATEGORÍAS</span>
             </div>
 
             {/* PREVIEW VIDEO / POSTER WITH HOVER REVEAL */}
@@ -124,16 +114,6 @@ export default function ProyectosPreview() {
                 className="object-cover grayscale contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700"
               />
 
-              {/* OVERLAY RETICLE */}
-              <div className="absolute inset-0 pointer-events-none p-4 flex flex-col justify-between">
-                <div className="flex justify-between text-[9px] font-tech text-white bg-black/60 px-2 py-1 self-start border border-[#333333]">
-                  <span>CINE MASTER: 4K 120FPS 10-BIT</span>
-                </div>
-                <div className="text-[9px] font-tech text-[#DFFF00] bg-black/80 px-2 py-1 self-end border border-[#333333]">
-                  PRORES / ACEScct
-                </div>
-              </div>
-
               {/* CORNER BRACKETS */}
               <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-[#DFFF00] opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-[#DFFF00] opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -145,10 +125,10 @@ export default function ProyectosPreview() {
             <div className="pt-5 space-y-4">
               <div>
                 <h3 className="font-editorial text-2xl font-bold text-white tracking-tight group-hover:text-[#DFFF00] transition-colors">
-                  PORTAFOLIO DE CINEMATOGRAFÍA
+                  VIDEO
                 </h3>
                 <p className="text-xs text-[#999999] font-sans leading-relaxed mt-1">
-                  Videoclips de alto presupuesto, reels comerciales para marcas de indumentaria, aftermovies de festivales y cortometrajes documentales.
+                  Videoclips, comerciales de marca, aftermovies de festivales y documental.
                 </p>
               </div>
 
@@ -167,7 +147,7 @@ export default function ProyectosPreview() {
                   href="/proyectos/video"
                   className="w-full py-3 bg-[#171717] hover:bg-[#DFFF00] text-white hover:text-black font-tech text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center space-x-2 border border-[#2a2a2a] hover:border-[#DFFF00] transition-all"
                 >
-                  <span>VER GALERÍA DE CINEMATOGRAFÍA</span>
+                  <span>VER GALERÍA</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </Link>
               </MagneticButton>

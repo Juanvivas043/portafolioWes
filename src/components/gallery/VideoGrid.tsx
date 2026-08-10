@@ -20,8 +20,8 @@ export default function VideoGrid({
   initialCategory = 'all',
   showCategoryFilters = true,
   limit,
-  title = 'CINEMATOGRAFÍA & DIRECCIÓN // MOTION',
-  subtitle = 'GRID ASIMÉTRICO DE 5 COLUMNAS // STREAMING NATIVO',
+  title = 'VIDEO',
+  subtitle = 'SELECCIÓN DE TRABAJOS',
 }: VideoGridProps) {
   const [activeCategory, setActiveCategory] = useState<string>(initialCategory);
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
@@ -33,11 +33,11 @@ export default function VideoGrid({
   }, [activeCategory, limit]);
 
   const categories = [
-    { id: 'all', label: 'Todas las Producciones' },
+    { id: 'all', label: 'Todos' },
     { id: 'videoclips', label: 'Videoclips' },
     { id: 'conciertos', label: 'Conciertos' },
     { id: 'marcas', label: 'Comerciales' },
-    { id: 'redes', label: 'Social & Reels' },
+    { id: 'redes', label: 'Redes' },
     { id: 'deportes', label: 'Deportes' },
     { id: 'documental', label: 'Documental' },
   ];
@@ -58,37 +58,46 @@ export default function VideoGrid({
     <section className="py-14 bg-[#080808] border-b border-[#222222] relative">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
         {/* HEADER & CATEGORY BAR */}
-        <FadeUp className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#222222] pb-5 mb-6 gap-4">
-          <div>
-            <div className="text-[11px] font-tech text-[#DFFF00] tracking-widest uppercase mb-1 flex items-center gap-2">
-              <span className="w-3 h-px bg-[#DFFF00]" />
-              {subtitle}
+        <FadeUp className="border-b border-[#222222] pb-5 mb-6 space-y-5">
+          {/* TITLE ROW */}
+          <div className="flex items-end justify-between gap-4">
+            <div className="min-w-0">
+              <div className="text-[11px] font-tech text-[#DFFF00] tracking-widest uppercase mb-1 flex items-center gap-2">
+                <span className="w-3 h-px bg-[#DFFF00] shrink-0" />
+                <span className="truncate">{subtitle}</span>
+              </div>
+              <h2 className="font-editorial text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase whitespace-nowrap">
+                {title}
+              </h2>
             </div>
-            <h2 className="font-editorial text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
-              {title}
-            </h2>
+
+            <span className="text-[10px] font-tech text-[#666666] uppercase tracking-widest shrink-0 pb-1">
+              {displayVideos.length} {displayVideos.length === 1 ? 'VIDEO' : 'VIDEOS'}
+            </span>
           </div>
 
-          {/* CATEGORY FILTER BUTTONS */}
+          {/* CATEGORY FILTER BUTTONS — own row: horizontal scroll on phones, wraps on desktop */}
           {showCategoryFilters && (
-            <div className="flex flex-wrap gap-1.5 self-start md:self-auto">
-              {categories.map((cat) => {
-                const isActive = activeCategory === cat.id;
-                return (
-                  <button
-                    key={cat.id}
-                    type="button"
-                    onClick={() => setActiveCategory(cat.id)}
-                    className={`px-3 py-1.5 text-xs font-tech tracking-wider uppercase transition-all border ${
-                      isActive
-                        ? 'bg-[#DFFF00] text-black border-[#DFFF00] font-bold shadow-md'
-                        : 'bg-[#0e0e0e] text-[#888888] border-[#1f1f1f] hover:border-[#444444] hover:text-white'
-                    }`}
-                  >
-                    {cat.label}
-                  </button>
-                );
-              })}
+            <div className="-mx-2 px-2 overflow-x-auto sm:overflow-visible">
+              <div className="flex flex-nowrap sm:flex-wrap gap-1.5 min-w-max sm:min-w-0 pb-1 sm:pb-0">
+                {categories.map((cat) => {
+                  const isActive = activeCategory === cat.id;
+                  return (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => setActiveCategory(cat.id)}
+                      className={`shrink-0 px-3 py-1.5 text-xs font-tech tracking-wider uppercase transition-all border ${
+                        isActive
+                          ? 'bg-[#DFFF00] text-black border-[#DFFF00] font-bold'
+                          : 'bg-[#0e0e0e] text-[#888888] border-[#1f1f1f] hover:border-[#444444] hover:text-white'
+                      }`}
+                    >
+                      {cat.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           )}
         </FadeUp>
@@ -152,13 +161,13 @@ export default function VideoGrid({
         {displayVideos.length === 0 && (
           <div className="text-center py-20 border border-[#1f1f1f] bg-[#0c0c0c]">
             <Film className="w-10 h-10 text-[#444444] mx-auto mb-3" />
-            <div className="font-editorial text-lg text-white">No se encontraron videos en esta categoría</div>
+            <div className="font-editorial text-lg text-white">No hay videos en esta categoría</div>
             <button
               type="button"
               onClick={() => setActiveCategory('all')}
               className="mt-3 px-4 py-2 bg-[#DFFF00] text-black font-tech text-xs font-bold"
             >
-              Restablecer Filtros
+              Ver todos
             </button>
           </div>
         )}

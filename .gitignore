@@ -9,16 +9,36 @@
 # Next.js build output
 /.next/
 /out/
-
-# Production
 /build
 
-# Misc
-.DS_Store
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Variables de entorno (nunca versionar secretos)
+.env
+.env.*
+!.env.example
+
+# Certificados
 *.pem
 
-# Local env files
-.env*.local
+# Sistema operativo
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Editores / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code (config local de la maquina)
+.claude/settings.local.json
 
 # Vercel
 .vercel
@@ -27,4 +47,21 @@
 *.tsbuildinfo
 next-env.d.ts
 
-
+# ---------------------------------------------------------------------------
+# MEDIOS
+# /public/media SI se versiona: los .webp y .webm optimizados son parte del
+# repositorio y deben subirse. Solo se ignoran los originales sin optimizar
+# que los scripts de /scripts consumen y luego convierten.
+# ---------------------------------------------------------------------------
+/public/media/**/*.jpg
+/public/media/**/*.jpeg
+/public/media/**/*.png
+/public/media/**/*.heic
+/public/media/**/*.tif
+/public/media/**/*.tiff
+/public/media/**/*.mov
+/public/media/**/*.avi
+/public/media/**/*.mkv
+/public/media/**/*.arw
+/public/media/**/*.cr2
+/public/media/**/*.dng

@@ -25,43 +25,43 @@ export default function Footer() {
                   WES
                 </div>
                 <div className="text-[10px] font-tech text-[#888888] uppercase tracking-widest">
-                  CINEMATOGRAFÍA & FOTOGRAFÍA DE ALTA RESOLUCIÓN
+                  FOTOGRAFÍA & VIDEO
                 </div>
               </div>
             </div>
 
             <p className="text-xs text-[#888888] font-sans leading-relaxed max-w-sm">
-              Plataforma audiovisual orientada a la entrega multimedia fluida, estética geométrica de líneas rectas y contraste puro sin concesiones.
+              Fotografía y dirección audiovisual para artistas, marcas y eventos. Trabajo desde Caracas para toda Venezuela y el exterior.
             </p>
           </div>
 
           {/* QUICK LINKS */}
           <div className="md:col-span-3 space-y-3 text-xs font-tech">
-            <div className="text-[#DFFF00] uppercase tracking-widest font-bold">// NAVEGACIÓN</div>
+            <div className="text-[#DFFF00] uppercase tracking-widest font-bold">NAVEGACIÓN</div>
             <ul className="space-y-2 text-[#a0a0a0]">
               <li>
                 <Link href="/#inicio" className="hover:text-white transition-colors">
-                  Inicio // Top
+                  Inicio
                 </Link>
               </li>
               <li>
                 <Link href="/#about" className="hover:text-white transition-colors">
-                  Sobre WES & Filosofía
+                  Sobre mí
                 </Link>
               </li>
               <li>
                 <Link href="/proyectos/fotografia" className="hover:text-[#DFFF00] transition-colors">
-                  Galería de Fotografía
+                  Fotografía
                 </Link>
               </li>
               <li>
                 <Link href="/proyectos/video" className="hover:text-[#DFFF00] transition-colors">
-                  Galería de Cinematografía
+                  Video
                 </Link>
               </li>
               <li>
                 <Link href="/#contacto" className="hover:text-white transition-colors">
-                  Cotizaciones & Booking
+                  Contacto
                 </Link>
               </li>
             </ul>
@@ -69,7 +69,7 @@ export default function Footer() {
 
           {/* SOCIAL & DIRECT CHANNELS */}
           <div className="md:col-span-4 space-y-3 text-xs font-tech">
-            <div className="text-[#DFFF00] uppercase tracking-widest font-bold">// REDES & CONTACTO DIRECTO</div>
+            <div className="text-[#DFFF00] uppercase tracking-widest font-bold">REDES & CONTACTO</div>
             <div className="flex flex-col space-y-2">
               <a
                 href={ARTIST_PROFILE.socials.instagram}
@@ -79,7 +79,7 @@ export default function Footer() {
               >
                 <div className="flex items-center space-x-2">
                   <Instagram className="w-4 h-4 text-[#DFFF00]" />
-                  <span>Instagram Oficial</span>
+                  <span>Instagram</span>
                 </div>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
@@ -92,7 +92,7 @@ export default function Footer() {
               >
                 <div className="flex items-center space-x-2">
                   <Phone className="w-4 h-4 text-[#DFFF00]" />
-                  <span>WhatsApp: {ARTIST_PROFILE.socials.phone}</span>
+                  <span>WhatsApp {ARTIST_PROFILE.socials.phone}</span>
                 </div>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
@@ -115,11 +115,10 @@ export default function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-tech text-[#666666]">
           <div>
             <span>© {new Date().getFullYear()} WES. Todos los derechos reservados. </span>
-            <span className="text-[#DFFF00] font-bold">Desarrollado por Juan de momento.</span>
+            <span className="text-[#DFFF00] font-bold">Desarrollado por JuanDev.</span>
           </div>
 
           <div className="flex items-center space-x-4">
-            <span className="text-[10px] text-[#444444]">ARISTAS VIVAS 0PX • STRICT MONOCHROME</span>
             <button
               onClick={scrollToTop}
               className="p-2 border border-[#222222] bg-[#0d0d0d] hover:bg-[#DFFF00] hover:text-black text-white transition-colors flex items-center gap-1"

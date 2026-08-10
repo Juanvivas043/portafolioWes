@@ -22,7 +22,7 @@ export default function CTASection() {
           <div className="inline-flex items-center space-x-2 border border-[#2a2a2a] bg-[#121212] px-4 py-1.5 mx-auto">
             <span className="w-2 h-2 bg-[#DFFF00] inline-block animate-rec" />
             <span className="text-[#DFFF00] font-tech text-xs font-bold tracking-widest uppercase">
-              CALENDARIO DE PRODUCCIÓN 2026 DISPONIBLE
+              DISPONIBLE PARA NUEVOS PROYECTOS
             </span>
           </div>
         </FadeUp>
@@ -30,13 +30,13 @@ export default function CTASection() {
         {/* HIGH IMPACT HEADLINE */}
         <FadeUp delay={0.2}>
           <h2 className="font-editorial text-3xl sm:text-5xl lg:text-7xl font-extrabold text-white tracking-tight uppercase leading-[0.95] max-w-4xl mx-auto">
-            ¿Listo para elevar tu<span className="text-[#DFFF00]"> ESTÉTICA VISUAL</span>?
+            ¿TIENES UN<span className="text-[#DFFF00]"> PROYECTO</span> EN MENTE?
           </h2>
         </FadeUp>
 
         <FadeUp delay={0.3}>
           <p className="text-xs sm:text-base text-[#a0a0a0] font-sans max-w-2xl mx-auto leading-relaxed">
-            Desde videoclips cinematográficos en formato 4K 120p hasta campañas editoriales con líneas rectas y contraste puro. Reserva tu fecha de rodaje o sesión fotográfica ahora.
+            Sesiones fotográficas, videoclips, cobertura de eventos y campañas de marca. Cuéntame qué necesitas y reservamos la fecha.
           </p>
         </FadeUp>
 
@@ -47,7 +47,7 @@ export default function CTASection() {
               href="/#contacto"
               className="w-full sm:w-auto px-8 py-4 bg-[#DFFF00] text-black font-tech text-sm font-bold uppercase tracking-wider hover:bg-white transition-all flex items-center justify-center space-x-2 border border-[#DFFF00] shadow-[0_0_20px_rgba(223,255,0,0.2)]"
             >
-              <span>INICIAR PROYECTO // COTIZAR</span>
+              <span>SOLICITAR COTIZACIÓN</span>
               <ArrowUpRight className="w-4 h-4" />
             </Link>
           </MagneticButton>
@@ -67,11 +67,11 @@ export default function CTASection() {
 
         {/* TECHNICAL TICKER */}
         <FadeUp delay={0.5} className="pt-8 border-t border-[#1a1a1a] flex flex-wrap justify-center gap-6 text-[10px] font-tech text-[#666666]">
-          <span>FORMATO: SONY FX3 10-BIT 4:2:2</span>
+          <span>RESPUESTA EN 24 HORAS</span>
           <span>•</span>
-          <span>ENTREGA: 4K MASTER PRORES</span>
+          <span>CARACAS, VENEZUELA</span>
           <span>•</span>
-          <span>GEOMETRÍA: ARISTAS VIVAS 0PX RADIUS</span>
+          <span>VIAJES NACIONALES E INTERNACIONALES</span>
         </FadeUp>
       </div>
     </section>

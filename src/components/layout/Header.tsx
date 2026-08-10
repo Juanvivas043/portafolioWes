@@ -46,7 +46,7 @@ export default function Header({ activeSection }: HeaderProps) {
     { label: 'Inicio', href: '/' },
     { label: 'Fotografía', href: '/proyectos/fotografia' },
     { label: 'Video', href: '/proyectos/video' },
-    { label: 'About', href: '/#about' },
+    { label: 'Sobre mí', href: '/#about' },
     { label: 'Contacto', href: '/#contacto' },
   ];
 
@@ -176,7 +176,7 @@ export default function Header({ activeSection }: HeaderProps) {
                   W
                 </div>
                 <span className="font-editorial font-bold text-sm tracking-wider text-white">
-                  WES NAVIGATION
+                  NAVEGACIÓN
                 </span>
               </div>
 
@@ -193,7 +193,7 @@ export default function Header({ activeSection }: HeaderProps) {
             {/* DRAWER LINKS */}
             <div className="py-8 flex flex-col space-y-3">
               <span className="text-[10px] font-tech uppercase tracking-widest text-[#666666] mb-2">
-                // MAPA DEL PORTAFOLIO
+                SECCIONES
               </span>
               {navLinks.map((link, idx) => (
                 <Link
@@ -213,7 +213,7 @@ export default function Header({ activeSection }: HeaderProps) {
 
               <div className="pt-4 border-t border-[#1f1f1f] flex flex-col space-y-2">
                 <span className="text-[10px] font-tech uppercase tracking-widest text-[#666666] mb-1">
-                  // GALERÍAS DEDICADAS
+                  GALERÍAS
                 </span>
                 <Link
                   href="/proyectos/fotografia"
@@ -222,7 +222,7 @@ export default function Header({ activeSection }: HeaderProps) {
                 >
                   <span className="flex items-center gap-2">
                     <Camera className="w-4 h-4 text-[#DFFF00]" />
-                    Galería Fotografía
+                    Galería de Fotografía
                   </span>
                   <ArrowUpRight className="w-4 h-4" />
                 </Link>
@@ -233,7 +233,7 @@ export default function Header({ activeSection }: HeaderProps) {
                 >
                   <span className="flex items-center gap-2">
                     <Film className="w-4 h-4 text-[#DFFF00]" />
-                    Galería Cinematografía
+                    Galería de Video
                   </span>
                   <ArrowUpRight className="w-4 h-4" />
                 </Link>
@@ -242,18 +242,13 @@ export default function Header({ activeSection }: HeaderProps) {
 
             {/* DRAWER FOOTER & CTA BUTTON */}
             <div className="space-y-4 pt-4 border-t border-[#1f1f1f]">
-              <div className="flex items-center justify-between text-[10px] font-tech text-[#888888]">
-                <span>TIMECODE:</span>
-                <span className="text-[#DFFF00]">{time}</span>
-              </div>
-
               {/* MANDATORY CTA BUTTON IN SIDEBAR */}
               <Link
                 href="/#contacto"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="w-full py-3 bg-[#DFFF00] text-black font-tech text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center space-x-2 border border-[#DFFF00] hover:bg-white hover:border-white transition-all shadow-lg"
               >
-                <span>RESERVAR SESIÓN</span>
+                <span>CONTACTAR</span>
                 <ArrowUpRight className="w-4 h-4" />
               </Link>
             </div>

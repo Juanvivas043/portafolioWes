@@ -6,13 +6,13 @@ export default function NotFound() {
     <main className="min-h-screen bg-[#050505] text-[#f5f5f5] flex flex-col items-center justify-center p-6 text-center">
       <div className="border-2 border-[#222222] bg-[#0a0a0a] p-8 sm:p-12 max-w-lg space-y-6">
         <div className="text-[10px] font-tech text-[#DFFF00] uppercase tracking-widest">
-          // ERROR 404 • ENCUADRE FUERA DE LÍMITES
+          ERROR 404
         </div>
-        <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-white tracking-tight">
-          404 // NOT FOUND
+        <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-white tracking-tight uppercase">
+          PÁGINA NO ENCONTRADA
         </h1>
         <p className="text-xs sm:text-sm text-[#888888] font-sans">
-          La toma o página solicitada no existe o ha sido reubicada en el archivo.
+          La página que buscas no existe o fue movida.
         </p>
         <Link
           href="/"

@@ -37,16 +37,16 @@ export default function FotografiaPage() {
               <div className="inline-flex items-center space-x-2 border border-[#222222] bg-[#121212] px-3 py-1 mb-2">
                 <Camera className="w-3.5 h-3.5 text-[#DFFF00]" />
                 <span className="text-xs font-tech text-[#DFFF00] uppercase font-bold">
-                  CATÁLOGO FOTOGRÁFICO COMPLETO
+                  GALERÍA COMPLETA
                 </span>
               </div>
               <h1 className="font-editorial text-4xl sm:text-6xl font-extrabold text-white tracking-tight uppercase">
-                DISCIPLINA // FOTOGRAFÍA
+                FOTOGRAFÍA
               </h1>
             </div>
 
             <p className="text-xs font-tech text-[#888888] max-w-md">
-              Explora las obras por categoría. Haz clic en cualquier imagen para abrir el visor de alta resolución con metadatos EXIF de cámara, lente, apertura e ISO.
+              Filtra por categoría y haz clic en cualquier imagen para verla en grande con su ficha técnica.
             </p>
           </div>
         </div>
@@ -55,8 +55,8 @@ export default function FotografiaPage() {
       {/* FULL GALLERY GRID WITH CATEGORY FILTERS */}
       <GalleryGrid
         showCategoryFilters={true}
-        title="TODAS LAS OBRAS FOTOGRÁFICAS"
-        subtitle="SELECCIÓN CURADA // ARISTAS VIVAS & RESOLUCIÓN DIRECTA"
+        title="GALERÍA"
+        subtitle="FILTRA POR CATEGORÍA"
       />
 
       {/* CONTACT CTA SECTION REQUIRED FOR SUBPAGE */}

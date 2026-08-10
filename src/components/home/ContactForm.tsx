@@ -29,17 +29,17 @@ export default function ContactForm() {
           <div>
             <div className="text-[11px] font-tech text-[#DFFF00] tracking-widest uppercase mb-1 flex items-center gap-2">
               <span className="w-3 h-px bg-[#DFFF00]" />
-              CONTACTO & CONTRATACIONES
+              HABLEMOS
             </div>
             <h2 className="font-editorial text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
-              COTIZAR PRODUCCIÓN // WES
+              CONTACTO
             </h2>
           </div>
           <div className="text-left md:text-right">
             <span className="text-xs font-tech text-[#888888] uppercase tracking-widest block">
-              RESPUESTA ESTIMADA
+              RESPUESTA
             </span>
-            <span className="text-xs font-tech text-[#DFFF00]">DENTRO DE LAS 24 HORAS</span>
+            <span className="text-xs font-tech text-[#DFFF00]">EN 24 HORAS</span>
           </div>
         </FadeUp>
 
@@ -48,8 +48,8 @@ export default function ContactForm() {
           <FadeUp delay={0.1} className="lg:col-span-5 space-y-8 flex flex-col h-full">
             <div className="p-6 border-2 border-[#222222] bg-[#0a0a0a] space-y-6">
               <div className="flex items-center justify-between pb-3 border-b border-[#1f1f1f] text-[10px] font-tech">
-                <span className="text-white font-bold">INFO DIRECTA</span>
-                <span className="text-[#DFFF00]">DISPONIBILIDAD ACTIVA</span>
+                <span className="text-white font-bold">DATOS DE CONTACTO</span>
+                <span className="text-[#DFFF00]">DISPONIBLE</span>
               </div>
 
               <div className="space-y-4">
@@ -84,15 +84,15 @@ export default function ContactForm() {
                 <div className="flex items-start space-x-3">
                   <MapPin className="w-5 h-5 text-[#DFFF00] shrink-0 mt-0.5" />
                   <div>
-                    <div className="text-[10px] font-tech text-[#777777] uppercase">BASE DE OPERACIONES</div>
+                    <div className="text-[10px] font-tech text-[#777777] uppercase">UBICACIÓN</div>
                     <div className="text-sm font-tech text-white">{ARTIST_PROFILE.location}</div>
                   </div>
                 </div>
               </div>
 
               <div className="p-4 bg-[#121212] border border-[#1f1f1f] text-xs font-tech text-[#888888] space-y-1">
-                <div className="text-[#DFFF00] font-bold uppercase">// EQUIPO PARA VIAJES:</div>
-                <p>Disponibilidad para traslados nacionales e internacionales con pasaporte vigente y kit Pelican optimizado.</p>
+                <div className="text-[#DFFF00] font-bold uppercase">VIAJES</div>
+                <p>Disponible para trabajos fuera de Caracas y en el exterior.</p>
               </div>
             </div>
 
@@ -102,15 +102,15 @@ export default function ContactForm() {
                 ¿NECESITAS RESPUESTA INMEDIATA?
               </div>
               <p className="text-xs text-[#888888] mb-4">
-                Envía un mensaje directo a WhatsApp con los detalles de tu fecha y tipo de rodaje.
+                Escríbeme por WhatsApp con la fecha y el tipo de trabajo.
               </p>
               <a
-                href="https://wa.me/584120000000?text=Hola%20WES,%20vengo%20desde%20tu%20portafolio%20web%20y%20deseo%20cotizar%20un%20proyecto."
+                href={`${ARTIST_PROFILE.socials.whatsapp}?text=Hola%20WES,%20vengo%20desde%20tu%20portafolio%20web%20y%20quiero%20cotizar%20un%20proyecto.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-3 bg-[#171717] hover:bg-[#DFFF00] text-white hover:text-black font-tech text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center space-x-2 border border-[#2e2e2e] transition-colors"
               >
-                <span>ABRIR WHATSAPP DIRECTO</span>
+                <span>ABRIR WHATSAPP</span>
                 <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>
@@ -122,16 +122,16 @@ export default function ContactForm() {
               <div className="p-10 border-2 border-[#DFFF00] bg-[#0c0c0c] text-center space-y-4">
                 <CheckCircle2 className="w-12 h-12 text-[#DFFF00] mx-auto" />
                 <h3 className="font-editorial text-2xl font-bold text-white">
-                  ¡SOLICITUD DE PRODUCCIÓN ENVIADA!
+                  ¡MENSAJE ENVIADO!
                 </h3>
                 <p className="text-xs font-tech text-[#a0a0a0] max-w-md mx-auto">
-                  Gracias por contactar a WES. Analizaremos los requerimientos técnicos y el calendario para responderte con una propuesta formal.
+                  Gracias por escribir. Revisaré los detalles de tu proyecto y te responderé con una propuesta.
                 </p>
                 <button
                   onClick={() => setIsSubmitted(false)}
                   className="px-6 py-2.5 bg-[#DFFF00] text-black font-tech text-xs font-bold uppercase tracking-wider"
                 >
-                  Enviar otra cotización
+                  Enviar otro mensaje
                 </button>
               </div>
             ) : (
@@ -175,7 +175,7 @@ export default function ContactForm() {
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-tech text-[#888888] uppercase">FECHA TENTATIVA DE RODAJE</label>
+                    <label className="text-[11px] font-tech text-[#888888] uppercase">FECHA TENTATIVA</label>
                     <input
                       type="date"
                       value={formData.date}
@@ -188,14 +188,14 @@ export default function ContactForm() {
                 {/* PROJECT DESCRIPTION */}
                 <div className="space-y-1.5">
                   <label className="text-[11px] font-tech text-[#888888] uppercase">
-                    DETALLES DEL PROYECTO / REFERENCIAS VISUALES *
+                    CUÉNTAME SOBRE EL PROYECTO *
                   </label>
                   <textarea
                     required
                     rows={4}
                     value={formData.details}
                     onChange={(e) => setFormData({ ...formData, details: e.target.value })}
-                    placeholder="Describe el concepto, locaciones deseadas, duración de la entrega o metas visuales..."
+                    placeholder="Describe la idea, el lugar, la duración o lo que necesitas entregar..."
                     className="w-full p-3 bg-[#121212] border border-[#222222] text-white text-xs font-tech focus:border-[#DFFF00] focus:outline-none transition-colors resize-none"
                   />
                 </div>
@@ -207,7 +207,7 @@ export default function ContactForm() {
                     className="w-full py-4 bg-[#DFFF00] text-black font-tech text-xs font-bold uppercase tracking-wider hover:bg-white transition-all flex items-center justify-center space-x-2 border border-[#DFFF00]"
                   >
                     <Send className="w-4 h-4" />
-                    <span>ENVIAR SOLICITUD DE PRODUCCIÓN</span>
+                    <span>ENVIAR MENSAJE</span>
                   </button>
                 </MagneticButton>
               </form>

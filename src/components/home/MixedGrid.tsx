@@ -9,7 +9,6 @@ import MediaModal from '@/components/gallery/MediaModal';
 import VideoModal from '@/components/gallery/VideoModal';
 import { FadeUp, StaggerContainer, StaggerItem } from '@/components/animations/MotionWrapper';
 import ScrollDrawLine from '@/components/animations/ScrollDrawLine';
-import ScrollParallaxRow from '@/components/animations/ScrollParallaxRow';
 import ScrollAssembleCard from '@/components/animations/ScrollAssembleCard';
 import { Camera, Film, Maximize2, Play } from 'lucide-react';
 
@@ -77,28 +76,21 @@ export default function MixedGrid({ photoLimit = 10, videoLimit = 7 }: MixedGrid
 
   return (
     <section id="preview-grid" className="py-14 bg-[#050505] border-b border-[#222222] relative overflow-hidden">
-      {/* BACKGROUND PARALLAX TEXT WATERMARK */}
-      <div className="absolute top-1/4 inset-x-0 pointer-events-none z-0">
-        <ScrollParallaxRow text="SELECTED WORKS // 4K DCI // RAW 10-BIT // ZEISS PRIMES // 24FPS" direction="right" speed={180} />
-      </div>
-
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 relative z-10">
         {/* SECTION HEADER */}
         <FadeUp className="flex items-end justify-between pb-4">
           <div>
             <div className="text-[11px] font-tech text-[#DFFF00] tracking-widest uppercase mb-2 flex items-center gap-2">
               <span className="w-4 h-px bg-[#DFFF00]" />
-              ARCHIVO VISUAL // FOCUS LOCK
+              SELECCIÓN
             </div>
             <p className="font-editorial text-4xl sm:text-5xl font-extrabold text-white tracking-tighter uppercase leading-none">
-              SELECTED<br />
-              <span className="text-[#DFFF00]">WORKS</span>
+              TRABAJOS
             </p>
           </div>
           <div className="hidden md:flex flex-col items-end text-[10px] font-tech text-[#444444] gap-1 pb-1">
-            <span className="text-[#555555]">{photoItems.length} FOTO</span>
-            <span className="text-[#555555]">{videoLimit} VIDEO</span>
-            <span className="text-[#DFFF00] pt-1">WES ©</span>
+            <span className="text-[#555555]">{photoItems.length} FOTOGRAFÍAS</span>
+            <span className="text-[#555555]">{mixedItems.length - photoItems.length} VIDEOS</span>
           </div>
         </FadeUp>
 

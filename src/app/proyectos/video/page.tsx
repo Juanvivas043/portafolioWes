@@ -9,8 +9,8 @@ import { ArrowLeft, Film } from 'lucide-react';
 export const dynamic = 'force-static';
 
 export const metadata: Metadata = {
-  title: 'Galería de Cinematografía & Video | WES',
-  description: 'Portafolio de cinematografía, videoclips musicales, comerciales y reels por WES. Streaming local fluido y master en 4K 120fps.',
+  title: 'Galería de Video | WES',
+  description: 'Portafolio de video de WES: videoclips musicales, comerciales de marca, aftermovies de festivales, deportes y documental.',
 };
 
 export default function VideoPage() {
@@ -29,7 +29,7 @@ export default function VideoPage() {
             <span>/</span>
             <span className="text-[#DFFF00]">PROYECTOS</span>
             <span>/</span>
-            <span className="text-white">CINEMATOGRAFÍA</span>
+            <span className="text-white">VIDEO</span>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -37,16 +37,16 @@ export default function VideoPage() {
               <div className="inline-flex items-center space-x-2 border border-[#222222] bg-[#121212] px-3 py-1 mb-2">
                 <Film className="w-3.5 h-3.5 text-[#DFFF00]" />
                 <span className="text-xs font-tech text-[#DFFF00] uppercase font-bold">
-                  STREAMING CINEMATOGRÁFICO
+                  GALERÍA COMPLETA
                 </span>
               </div>
               <h1 className="font-editorial text-4xl sm:text-6xl font-extrabold text-white tracking-tight uppercase">
-                DISCIPLINA // CINEMATOGRAFÍA
+                VIDEO
               </h1>
             </div>
 
             <p className="text-xs font-tech text-[#888888] max-w-md">
-              Videoclips, spots comerciales y microcontenido vertical para redes. Haz clic en cualquier pieza para abrir el reproductor cinematográfico con controles personalizados.
+              Videoclips, comerciales y contenido para redes. Haz clic en cualquier pieza para reproducirla.
             </p>
           </div>
         </div>
@@ -55,8 +55,8 @@ export default function VideoPage() {
       {/* FULL VIDEO GRID WITH CATEGORY FILTERS */}
       <VideoGrid
         showCategoryFilters={true}
-        title="TODAS LAS PRODUCCIONES AUDIOVISUALES"
-        subtitle="STREAMING PARCIAL EN ALTA DEFINICIÓN & SIN RETARDOS"
+        title="GALERÍA"
+        subtitle="FILTRA POR CATEGORÍA"
       />
 
       {/* CONTACT CTA SECTION REQUIRED FOR SUBPAGE */}

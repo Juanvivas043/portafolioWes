@@ -4,16 +4,14 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 const TICKER_ITEMS = [
-  'SONY FX3 CINEMA LINE',
-  '4K DCI 120FPS',
-  'ZEISS MASTER PRIMES',
-  'ACEScct COLOR SCIENCE',
-  'RAW 16-BIT AUDIO',
-  'RONIN RS3 PRO GIMBAL',
-  'CARACAS // LATAM',
-  'DIRECTED BY WES',
-  'HIGH CONTRAST MONOCHROME',
-  'ANALOGUE FILM EMULATION',
+  'FOTOGRAFÍA EDITORIAL',
+  'CONCIERTOS & FESTIVALES',
+  'DEPORTES DE ACCIÓN',
+  'VIDEOCLIPS MUSICALES',
+  'CAMPAÑAS DE MARCA',
+  'DOCUMENTAL',
+  'CONTENIDO PARA REDES',
+  'CARACAS · VENEZUELA',
 ];
 
 export default function InfiniteTicker() {

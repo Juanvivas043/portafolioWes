@@ -79,15 +79,6 @@ export default function Hero() {
         <span className="w-1.5 h-1.5 bg-red-500 animate-rec rounded-none" />
         <span className="text-white font-bold">REC</span>
         <span className="text-[#DFFF00]">{timecode}</span>
-        <span className="text-[#333333]">|</span>
-        <span className="text-[#666666]">SONY FX3 · 4K · ƒ/1.2</span>
-      </div>
-
-      {/* TOP-RIGHT: LUT label only */}
-      <div className="absolute top-[90px] right-4 z-20 hidden md:flex items-center gap-2 text-[9px] font-tech tracking-widest pointer-events-none bg-black/50 border border-[#1a1a1a] px-2.5 py-1.5 backdrop-blur-sm">
-        <span className="text-[#DFFF00]">LUT: ACEScct</span>
-        <span className="text-[#333333]">|</span>
-        <span className="text-[#666666]">2.39:1 CINEMA</span>
       </div>
 
       {/* MUTE BUTTON */}
@@ -113,8 +104,8 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="inline-flex items-center gap-2 border border-[#2a2a2a] bg-black/50 backdrop-blur-sm px-3 py-1 mb-4 sm:mb-5"
             >
-              <span className="text-[#DFFF00] font-tech text-[10px] sm:text-[11px] tracking-widest font-bold">// FOTÓGRAFO</span>
-              <span className="text-[#555555] text-[10px] sm:text-[11px] font-tech">PROFESIONAL</span>
+              <span className="text-[#DFFF00] font-tech text-[10px] sm:text-[11px] tracking-widest font-bold">FOTÓGRAFO</span>
+              <span className="text-[#555555] text-[10px] sm:text-[11px] font-tech">& DIRECTOR AUDIOVISUAL</span>
             </motion.div>
 
             {/* H1 WITH FOCAL BLUR REVEAL */}
@@ -173,13 +164,13 @@ export default function Hero() {
       <div className="relative z-10 border-t border-white/10 backdrop-blur-sm bg-black/40">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 py-3 flex items-center justify-between">
           <span className="text-[9px] font-tech text-[#444444] tracking-widest hidden sm:inline">
-            WES © PORTAFOLIO OFICIAL
+            WESLY PACHECO — PORTAFOLIO
           </span>
           <Link
             href="/#about"
             className="flex items-center gap-1.5 text-[10px] font-tech text-[#666666] hover:text-[#DFFF00] transition-colors ml-auto"
           >
-            <span>SCROLL DOWN</span>
+            <span>DESLIZA</span>
             <ArrowDown className="w-3.5 h-3.5 animate-bounce" />
           </Link>
         </div>

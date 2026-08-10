@@ -39,7 +39,7 @@ export default function MediaModal({
           <div className="flex items-center space-x-3 text-white">
             <div className="w-2 h-2 bg-[#DFFF00]" />
             <span className="font-bold tracking-wider uppercase">
-              EXIF VIEWER // {photo.title}
+              {photo.title}
             </span>
             <span className="text-[#666666] hidden sm:inline">
               [{currentIndex + 1} / {totalItems}]
@@ -114,7 +114,7 @@ export default function MediaModal({
               <div className="space-y-2 pt-3 border-t border-[#1f1f1f]">
                 <div className="text-[10px] font-tech text-[#666666] uppercase tracking-widest flex items-center gap-1.5">
                   <Camera className="w-3 h-3 text-[#DFFF00]" />
-                  <span>METADATOS ÓPTICOS // RAW</span>
+                  <span>FICHA TÉCNICA</span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-[11px] font-tech">
@@ -123,7 +123,7 @@ export default function MediaModal({
                     <div className="text-white font-bold truncate">{photo.camera}</div>
                   </div>
                   <div className="p-2 bg-[#0e0e0e] border border-[#1a1a1a]">
-                    <div className="text-[#666666] text-[9px]">ÓPTICA / LENTE</div>
+                    <div className="text-[#666666] text-[9px]">LENTE</div>
                     <div className="text-white font-bold truncate">{photo.lens}</div>
                   </div>
                   <div className="p-2 bg-[#0e0e0e] border border-[#1a1a1a]">
@@ -144,7 +144,7 @@ export default function MediaModal({
                   </div>
                   <div className="flex items-center space-x-2">
                     <Calendar className="w-3.5 h-3.5 text-[#DFFF00]" />
-                    <span>Año de Captura: {photo.year}</span>
+                    <span>Año: {photo.year}</span>
                   </div>
                   {photo.client && (
                     <div className="flex items-center space-x-2">
@@ -172,7 +172,7 @@ export default function MediaModal({
                 onClick={onClose}
                 className="w-full py-2.5 bg-[#DFFF00] text-black font-tech text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center space-x-2 hover:bg-white transition-colors"
               >
-                <span>COTIZAR PRODUCCIÓN SIMILAR</span>
+                <span>QUIERO ALGO ASÍ</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
             </div>

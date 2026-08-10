@@ -77,7 +77,7 @@ export default function VideoModal({ video, isOpen, onClose }: VideoModalProps) 
           <div className="flex items-center space-x-3 text-white">
             <div className="w-2 h-2 bg-red-600 animate-rec" />
             <span className="font-bold tracking-wider uppercase">
-              CINEMA PLAYER // {video.title}
+              {video.title}
             </span>
           </div>
 
@@ -115,7 +115,7 @@ export default function VideoModal({ video, isOpen, onClose }: VideoModalProps) 
                 <div className="absolute inset-0 m-auto flex flex-col items-center justify-center bg-black/60 backdrop-blur-xs pointer-events-none z-20">
                   <div className="w-10 h-10 border-2 border-[#333333] border-t-[#DFFF00] animate-spin mb-2" />
                   <span className="text-[10px] font-tech text-[#DFFF00] tracking-widest uppercase">
-                    BUFFERING STREAM // {video.resolution || '4K'}
+                    CARGANDO
                   </span>
                 </div>
               )}
@@ -216,11 +216,11 @@ export default function VideoModal({ video, isOpen, onClose }: VideoModalProps) 
               {/* SPECS TABLE */}
               <div className="space-y-2 pt-3 border-t border-[#1f1f1f] text-[11px] font-tech">
                 <div className="p-2 bg-[#0e0e0e] border border-[#1a1a1a]">
-                  <div className="text-[#666666] text-[9px]">ROL TÉCNICO</div>
+                  <div className="text-[#666666] text-[9px]">ROL</div>
                   <div className="text-white font-bold">{video.role}</div>
                 </div>
                 <div className="p-2 bg-[#0e0e0e] border border-[#1a1a1a]">
-                  <div className="text-[#666666] text-[9px]">CLIENTE / SELLO</div>
+                  <div className="text-[#666666] text-[9px]">CLIENTE</div>
                   <div className="text-[#DFFF00] font-bold">{video.client}</div>
                 </div>
                 <div className="p-2 bg-[#0e0e0e] border border-[#1a1a1a]">
@@ -246,7 +246,7 @@ export default function VideoModal({ video, isOpen, onClose }: VideoModalProps) 
                 onClick={onClose}
                 className="w-full py-2.5 bg-[#DFFF00] text-black font-tech text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center space-x-2 hover:bg-white transition-colors"
               >
-                <span>DIRIGIR MI PRÓXIMA PRODUCCIÓN</span>
+                <span>QUIERO ALGO ASÍ</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
             </div>

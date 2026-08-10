@@ -16,7 +16,7 @@
   --color-accent: #DFFF00; /* Acid Lime / High-Voltage Yellow */
 }
 
-/* STRICT ZERO BORDER RADIUS PER CONTEXT.MD */
+/* STRICT ZERO BORDER RADIUS PER CLAUDE.MD */
 * {
   border-radius: 0px !important;
   box-sizing: border-box;
