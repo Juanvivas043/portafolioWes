@@ -5,13 +5,16 @@ import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown, ArrowUpRight, Camera, Film, Volume2, VolumeX } from 'lucide-react';
 import MagneticButton from '@/components/animations/MagneticButton';
-import { getFeaturedPhoto } from '@/helpers/mediaData';
+import { getFeaturedPhoto, getHeroVideo } from '@/helpers/mediaData';
 
 export default function Hero() {
   const [isAudioMuted, setIsAudioMuted] = useState(true);
   const [timecode, setTimecode] = useState('00:00:00:00');
   const sectionRef = useRef<HTMLElement | null>(null);
-  const heroPoster = getFeaturedPhoto('artistas');
+  const heroVideo = getHeroVideo();
+  // El poster es el fotograma real del propio video de fondo: lo que se ve
+  // mientras carga es exactamente el primer plano que va a aparecer.
+  const heroPoster = heroVideo?.posterUrl ?? getFeaturedPhoto('artistas')?.src;
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -49,18 +52,17 @@ export default function Hero() {
         className="absolute inset-0 w-full h-[120%] -top-[10%] pointer-events-none will-change-transform"
       >
         <video
+          key={heroVideo?.id}
           autoPlay
           loop
           muted={isAudioMuted}
           playsInline
           preload="auto"
           disablePictureInPicture
-          poster={heroPoster?.src}
+          poster={heroPoster}
+          src={heroVideo?.streamUrl}
           className="w-full h-full object-cover grayscale contrast-125 opacity-55"
-        >
-          <source src="/media/videos/hero/hero_bg_loop.webm" type="video/webm" />
-          <source src="/media/videos/hero/hero_bg_loop.mp4" type="video/mp4" />
-        </video>
+        />
       </motion.div>
 
       {/* GRADIENT OVERLAY */}

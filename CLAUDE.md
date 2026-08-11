@@ -288,6 +288,23 @@ No están en `package.json`; se corren con `node scripts/<archivo>.js`.
 `next build` y `next dev` comparten el directorio `.next` y se sobrescriben.
 Si pasa, para el dev server, borra `.next` y arranca de nuevo.
 
+### PELIGRO: Windows no distingue mayúsculas al borrar
+
+`rm -rf public/media/videos/DEPORTES` **también borra `deportes/`** en este
+sistema de archivos. Así se destruyeron 31 `.webm` recién convertidos: las
+categorías cuyo nombre de origen coincide con el slug destino salvo mayúsculas
+(`DEPORTES`/`deportes`, `MARCAS`/`marcas`, `DOCUMENTAL`/`documental`,
+`VIDEOCLIPS`/`videoclips`) se borraron con su propio resultado.
+
+Antes de eliminar cualquier carpeta de origen:
+
+1. Comprueba que el nombre no colisione con un slug destino ignorando
+   mayúsculas.
+2. Si colisiona, **mueve el resultado fuera antes de borrar**, o renombra el
+   origen primero (`DEPORTES` → `_src_deportes`).
+3. Nunca borres un origen sin verificar que su salida abre y tiene duración
+   válida — que el archivo exista no basta.
+
 ---
 
 ## 9. Mapa de componentes
@@ -305,6 +322,12 @@ Si pasa, para el dev server, borra `.next` y arranca de nuevo.
 **Home** (`/`, compuesta en `src/app/page.tsx`):
 `Hero` → `AutonomousInfiniteReel` → `About` → `ProyectosPreview` →
 `MixedGrid` → `CTASection` → `ContactForm` → `Footer`.
+
+**El Hero no tiene video propio.** Reutiliza una pieza del catálogo vía
+`getHeroVideo()` (`mediaData.ts`), así que no suma peso al sitio y hereda la
+misma optimización y su pista de audio. Ya no existe `videos/hero/`: aquel loop
+se generaba aparte y **se codificaba con `-an`**, por lo que el botón de sonido
+no podía funcionar. Para cambiar el fondo, edita `HERO_VIDEO_SLUG`.
 
 **Galería** — `GalleryGrid` (fotos) y `VideoGrid` (videos), con `MediaModal` y
 `VideoModal`. Grid masonry asimétrico de 5 columnas con `grid-auto-flow: dense`;

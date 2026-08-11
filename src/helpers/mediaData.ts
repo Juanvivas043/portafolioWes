@@ -71,6 +71,27 @@ export const PHOTO_CATALOG: readonly PhotoItem[] = GENERATED_PHOTOS;
 export const VIDEO_CATALOG: readonly VideoItem[] = GENERATED_VIDEOS;
 
 /**
+ * Video de fondo del Hero.
+ *
+ * No existe un archivo aparte para el hero: se reutiliza una pieza del propio
+ * catalogo, asi que no suma peso al sitio y se beneficia de la misma
+ * optimizacion. Antes habia un `hero_bg_loop` generado por separado que ademas
+ * se codificaba sin pista de audio, y por eso el boton de sonido no hacia nada.
+ *
+ * Si el archivo preferido desaparece del catalogo, cae al video apaisado mas
+ * largo disponible en lugar de dejar el Hero sin fondo.
+ */
+const HERO_VIDEO_SLUG = 'def-vida-furia-video-festival';
+
+export function getHeroVideo(): VideoItem | undefined {
+  const preferred = VIDEO_CATALOG.find((video) => video.streamUrl.includes(HERO_VIDEO_SLUG));
+  if (preferred) return preferred;
+
+  const landscape = VIDEO_CATALOG.filter((video) => video.width >= video.height);
+  return [...landscape].sort((a, b) => b.durationSeconds - a.durationSeconds)[0] ?? VIDEO_CATALOG[0];
+}
+
+/**
  * Devuelve una foto destacada de una categoria para usarla como imagen fija
  * (portada de seccion, poster del hero, retrato de About...).
  *

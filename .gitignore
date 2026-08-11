@@ -66,10 +66,48 @@ next-env.d.ts
 # Los .mp4 en crudo tambien son originales. La unica excepcion es el fallback
 # del loop del Hero, que si forma parte del sitio publicado.
 /public/media/**/*.mp4
-!/public/media/videos/hero/hero_bg_loop.mp4
 
 # Basura de macOS que viaja al copiar desde un Mac (resource forks)
 ._*
 /public/media/**/*.arw
 /public/media/**/*.cr2
 /public/media/**/*.dng
+
+# >>> videos publicados (generado por scripts/select-published-videos.js)
+# Los .webm no se versionan por defecto: la libreria completa pesa mas de lo
+# que conviene en un repo. Solo suben los que el sitio publica.
+/public/media/**/*.webm
+!/public/media/videos/conciertos/anima-sunrise.webm
+!/public/media/videos/conciertos/def-anima-halloween.webm
+!/public/media/videos/conciertos/noreh-concierto.webm
+!/public/media/videos/conciertos/recap-micro.webm
+!/public/media/videos/conciertos/the-flowershop-after-movie-final.webm
+!/public/media/videos/conciertos/timotes-marciano.webm
+!/public/media/videos/destinos/calle-dos-ojos-horizontal.webm
+!/public/media/videos/destinos/def-recorrido-shangrila.webm
+!/public/media/videos/destinos/def-vida-furia-video-festival.webm
+!/public/media/videos/destinos/reel-thailand.webm
+!/public/media/videos/redes/blk-stacy-malibu-3.webm
+!/public/media/videos/redes/cartel-1.webm
+!/public/media/videos/redes/chelonia-2-1.webm
+!/public/media/videos/redes/completa-la-frase-3.webm
+!/public/media/videos/redes/cpb-reacciones.webm
+!/public/media/videos/redes/entrevista-gadler.webm
+!/public/media/videos/redes/helena.webm
+!/public/media/videos/redes/historia-x-entrada-1.webm
+!/public/media/videos/redes/marathon.webm
+!/public/media/videos/redes/motocross.webm
+!/public/media/videos/redes/padel-guion-1.webm
+!/public/media/videos/redes/presentacion-atletas.webm
+!/public/media/videos/redes/raw-furia-team.webm
+!/public/media/videos/redes/recap-margarita-1.webm
+!/public/media/videos/redes/reel-2-inefable.webm
+!/public/media/videos/redes/reel-carteles-1.webm
+!/public/media/videos/redes/reel-keydomar-energy-1.webm
+!/public/media/videos/redes/reel-maracaibo.webm
+!/public/media/videos/redes/reel-parque-central.webm
+!/public/media/videos/redes/reel-pista-furia-club-2.webm
+!/public/media/videos/redes/reel-planes-1.webm
+!/public/media/videos/redes/salto-chris.webm
+!/public/media/videos/redes/timotes-v4-2.webm
+# <<< videos publicados

@@ -1,0 +1,167 @@
+[
+  {
+    "rel": "conciertos/anima-sunrise.webm",
+    "category": "conciertos",
+    "mb": 25.9
+  },
+  {
+    "rel": "conciertos/def-anima-halloween.webm",
+    "category": "conciertos",
+    "mb": 11
+  },
+  {
+    "rel": "conciertos/noreh-concierto.webm",
+    "category": "conciertos",
+    "mb": 25.3
+  },
+  {
+    "rel": "conciertos/recap-micro.webm",
+    "category": "conciertos",
+    "mb": 13
+  },
+  {
+    "rel": "conciertos/the-flowershop-after-movie-final.webm",
+    "category": "conciertos",
+    "mb": 14.3
+  },
+  {
+    "rel": "conciertos/timotes-marciano.webm",
+    "category": "conciertos",
+    "mb": 4.5
+  },
+  {
+    "rel": "destinos/calle-dos-ojos-horizontal.webm",
+    "category": "destinos",
+    "mb": 13.7
+  },
+  {
+    "rel": "destinos/def-recorrido-shangrila.webm",
+    "category": "destinos",
+    "mb": 8
+  },
+  {
+    "rel": "destinos/def-vida-furia-video-festival.webm",
+    "category": "destinos",
+    "mb": 24.6
+  },
+  {
+    "rel": "destinos/reel-thailand.webm",
+    "category": "destinos",
+    "mb": 7.2
+  },
+  {
+    "rel": "redes/blk-stacy-malibu-3.webm",
+    "category": "redes",
+    "mb": 1.3
+  },
+  {
+    "rel": "redes/cartel-1.webm",
+    "category": "redes",
+    "mb": 2.6
+  },
+  {
+    "rel": "redes/chelonia-2-1.webm",
+    "category": "redes",
+    "mb": 8.6
+  },
+  {
+    "rel": "redes/completa-la-frase-3.webm",
+    "category": "redes",
+    "mb": 7
+  },
+  {
+    "rel": "redes/cpb-reacciones.webm",
+    "category": "redes",
+    "mb": 14.4
+  },
+  {
+    "rel": "redes/entrevista-gadler.webm",
+    "category": "redes",
+    "mb": 3.6
+  },
+  {
+    "rel": "redes/helena.webm",
+    "category": "redes",
+    "mb": 5.9
+  },
+  {
+    "rel": "redes/historia-x-entrada-1.webm",
+    "category": "redes",
+    "mb": 15.8
+  },
+  {
+    "rel": "redes/marathon.webm",
+    "category": "redes",
+    "mb": 2.2
+  },
+  {
+    "rel": "redes/motocross.webm",
+    "category": "redes",
+    "mb": 12.7
+  },
+  {
+    "rel": "redes/padel-guion-1.webm",
+    "category": "redes",
+    "mb": 3.1
+  },
+  {
+    "rel": "redes/presentacion-atletas.webm",
+    "category": "redes",
+    "mb": 6.3
+  },
+  {
+    "rel": "redes/raw-furia-team.webm",
+    "category": "redes",
+    "mb": 5.2
+  },
+  {
+    "rel": "redes/recap-margarita-1.webm",
+    "category": "redes",
+    "mb": 10.4
+  },
+  {
+    "rel": "redes/reel-2-inefable.webm",
+    "category": "redes",
+    "mb": 3.3
+  },
+  {
+    "rel": "redes/reel-carteles-1.webm",
+    "category": "redes",
+    "mb": 4
+  },
+  {
+    "rel": "redes/reel-keydomar-energy-1.webm",
+    "category": "redes",
+    "mb": 4
+  },
+  {
+    "rel": "redes/reel-maracaibo.webm",
+    "category": "redes",
+    "mb": 7.6
+  },
+  {
+    "rel": "redes/reel-parque-central.webm",
+    "category": "redes",
+    "mb": 5.5
+  },
+  {
+    "rel": "redes/reel-pista-furia-club-2.webm",
+    "category": "redes",
+    "mb": 3
+  },
+  {
+    "rel": "redes/reel-planes-1.webm",
+    "category": "redes",
+    "mb": 3.2
+  },
+  {
+    "rel": "redes/salto-chris.webm",
+    "category": "redes",
+    "mb": 6.3
+  },
+  {
+    "rel": "redes/timotes-v4-2.webm",
+    "category": "redes",
+    "mb": 3.9
+  }
+]
