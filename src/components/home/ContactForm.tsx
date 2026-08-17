@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { ARTIST_PROFILE } from '@/helpers/mediaData';
-import { ArrowUpRight, CheckCircle2, Mail, MapPin, Phone, Send } from 'lucide-react';
+import { AlertCircle, ArrowUpRight, CheckCircle2, Mail, MapPin, Phone, Send } from 'lucide-react';
 import { FadeUp } from '@/components/animations/MotionWrapper';
 import MagneticButton from '@/components/animations/MagneticButton';
 
@@ -13,12 +14,40 @@ export default function ContactForm() {
     phone: '',
     date: '',
     details: '',
+    consent: false,
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [errors, setErrors] = useState<string[]>([]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    if (isSending) return;
+
+    setIsSending(true);
+    setErrors([]);
+
+    try {
+      const response = await fetch('/api/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok || !result?.ok) {
+        setErrors(result?.errors ?? ['No se pudo enviar el mensaje. Inténtalo de nuevo.']);
+        return;
+      }
+
+      setIsSubmitted(true);
+      setFormData({ name: '', email: '', phone: '', date: '', details: '', consent: false });
+    } catch {
+      // Sin conexion o servidor caido: el visitante sigue teniendo WhatsApp.
+      setErrors(['No hay conexión con el servidor. Escríbeme por WhatsApp mientras tanto.']);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -125,7 +154,8 @@ export default function ContactForm() {
                   ¡MENSAJE ENVIADO!
                 </h3>
                 <p className="text-xs font-tech text-[#a0a0a0] max-w-md mx-auto">
-                  Gracias por escribir. Revisaré los detalles de tu proyecto y te responderé con una propuesta.
+                  Te envié una confirmación a tu correo. Revisaré los detalles de tu proyecto y
+                  te responderé dentro de las próximas 24 horas.
                 </p>
                 <button
                   onClick={() => setIsSubmitted(false)}
@@ -170,7 +200,7 @@ export default function ContactForm() {
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="+58 412 000 0000"
+                      placeholder="+58 414 000 0000"
                       className="w-full p-3 bg-[#121212] border border-[#222222] text-white text-xs font-tech focus:border-[#DFFF00] focus:outline-none transition-colors"
                     />
                   </div>
@@ -200,14 +230,58 @@ export default function ContactForm() {
                   />
                 </div>
 
+                {/* CONSENTIMIENTO DE TRATAMIENTO DE DATOS */}
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    required
+                    checked={formData.consent}
+                    onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
+                    className="mt-0.5 w-4 h-4 shrink-0 accent-[#DFFF00] cursor-pointer"
+                  />
+                  <span className="text-[11px] font-tech text-[#888888] leading-relaxed group-hover:text-[#a0a0a0] transition-colors">
+                    Autorizo el uso de estos datos para responder a mi solicitud. No se
+                    comparten con terceros ni se usan para publicidad.{' '}
+                    <Link
+                      href="/privacidad"
+                      target="_blank"
+                      className="text-[#DFFF00] hover:underline"
+                    >
+                      Ver política de privacidad
+                    </Link>
+                  </span>
+                </label>
+
+                {/* ERRORES DE ENVÍO O DE VALIDACIÓN DEL SERVIDOR */}
+                {errors.length > 0 && (
+                  <div className="p-3 border border-[#DFFF00] bg-[#121212] space-y-1" role="alert">
+                    {errors.map((error) => (
+                      <div key={error} className="flex items-start gap-2 text-xs font-tech text-[#DFFF00]">
+                        <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                        <span>{error}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 {/* SUBMIT BUTTON WITH MAGNETIC HOVER */}
                 <MagneticButton strength={12} className="w-full">
                   <button
                     type="submit"
-                    className="w-full py-4 bg-[#DFFF00] text-black font-tech text-xs font-bold uppercase tracking-wider hover:bg-white transition-all flex items-center justify-center space-x-2 border border-[#DFFF00]"
+                    disabled={isSending}
+                    className="w-full py-4 bg-[#DFFF00] text-black font-tech text-xs font-bold uppercase tracking-wider hover:bg-white transition-all flex items-center justify-center space-x-2 border border-[#DFFF00] disabled:opacity-60 disabled:cursor-wait"
                   >
-                    <Send className="w-4 h-4" />
-                    <span>ENVIAR MENSAJE</span>
+                    {isSending ? (
+                      <>
+                        <span className="w-4 h-4 border-2 border-black/30 border-t-black animate-spin" />
+                        <span>ENVIANDO...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>ENVIAR MENSAJE</span>
+                      </>
+                    )}
                   </button>
                 </MagneticButton>
               </form>

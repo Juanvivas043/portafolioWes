@@ -1,19 +1,23 @@
 import type { Metadata } from 'next';
 import Header from '@/components/layout/Header';
-import VideoGrid from '@/components/gallery/VideoGrid';
+import CategoryGrid from '@/components/gallery/CategoryGrid';
 import ContactForm from '@/components/home/ContactForm';
 import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
 import { ArrowLeft, Film } from 'lucide-react';
+import { getVideoCategories, VIDEO_CATALOG } from '@/helpers/mediaData';
 
 export const dynamic = 'force-static';
 
 export const metadata: Metadata = {
-  title: 'Galería de Video | WES',
-  description: 'Portafolio de video de WES: videoclips musicales, comerciales de marca, aftermovies de festivales, deportes y documental.',
+  title: 'Video | WES',
+  description:
+    'Portafolio de video de WES por categorías: conciertos, destinos y contenido para redes.',
 };
 
 export default function VideoPage() {
+  const categories = getVideoCategories();
+
   return (
     <main className="min-h-screen bg-[#050505] text-[#f5f5f5]">
       <Header />
@@ -37,7 +41,7 @@ export default function VideoPage() {
               <div className="inline-flex items-center space-x-2 border border-[#222222] bg-[#121212] px-3 py-1 mb-2">
                 <Film className="w-3.5 h-3.5 text-[#DFFF00]" />
                 <span className="text-xs font-tech text-[#DFFF00] uppercase font-bold">
-                  GALERÍA COMPLETA
+                  {VIDEO_CATALOG.length} VIDEOS
                 </span>
               </div>
               <h1 className="font-editorial text-4xl sm:text-6xl font-extrabold text-white tracking-tight uppercase">
@@ -46,22 +50,20 @@ export default function VideoPage() {
             </div>
 
             <p className="text-xs font-tech text-[#888888] max-w-md">
-              Videoclips, comerciales y contenido para redes. Haz clic en cualquier pieza para reproducirla.
+              Elige una categoría para ver su galería completa.
             </p>
           </div>
         </div>
       </section>
 
-      {/* FULL VIDEO GRID WITH CATEGORY FILTERS */}
-      <VideoGrid
-        showCategoryFilters={true}
-        title="GALERÍA"
-        subtitle="FILTRA POR CATEGORÍA"
+      <CategoryGrid
+        categories={categories}
+        title="CATEGORÍAS"
+        subtitle="ELIGE UNA CATEGORÍA"
+        itemNoun={{ singular: 'video', plural: 'videos' }}
       />
 
-      {/* CONTACT CTA SECTION REQUIRED FOR SUBPAGE */}
       <ContactForm />
-
       <Footer />
     </main>
   );

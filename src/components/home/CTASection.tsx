@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { FadeUp } from '@/components/animations/MotionWrapper';
 import MagneticButton from '@/components/animations/MagneticButton';
+import { ARTIST_PROFILE } from '@/helpers/mediaData';
 
 export default function CTASection() {
   return (
@@ -54,7 +55,7 @@ export default function CTASection() {
 
           <MagneticButton strength={15}>
             <a
-              href="https://wa.me/584120000000?text=Hola%20WES,%20me%20gustaría%20cotizar%20una%20producción%20audiovisual"
+              href={`${ARTIST_PROFILE.socials.whatsapp}?text=Hola%20WES,%20me%20gustar%C3%ADa%20cotizar%20una%20producci%C3%B3n%20audiovisual`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto px-8 py-4 bg-[#141414] text-white font-tech text-sm font-bold uppercase tracking-wider hover:border-[#DFFF00] hover:text-[#DFFF00] transition-all flex items-center justify-center space-x-2 border border-[#333333]"

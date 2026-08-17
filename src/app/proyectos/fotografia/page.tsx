@@ -1,19 +1,23 @@
 import type { Metadata } from 'next';
 import Header from '@/components/layout/Header';
-import GalleryGrid from '@/components/gallery/GalleryGrid';
+import CategoryGrid from '@/components/gallery/CategoryGrid';
 import ContactForm from '@/components/home/ContactForm';
 import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
 import { ArrowLeft, Camera } from 'lucide-react';
+import { getPhotoCategories, PHOTO_CATALOG } from '@/helpers/mediaData';
 
 export const dynamic = 'force-static';
 
 export const metadata: Metadata = {
-  title: 'Galería de Fotografía Profesional | WES',
-  description: 'Portafolio fotográfico de alta resolución por WES. Retratos de artistas, conciertos en vivo, deportes extremos, paisajes y campañas de marcas comerciales.',
+  title: 'Fotografía | WES',
+  description:
+    'Portafolio fotográfico de WES por categorías: artistas, conciertos, deportes, destinos, lifestyle y marcas.',
 };
 
 export default function FotografiaPage() {
+  const categories = getPhotoCategories();
+
   return (
     <main className="min-h-screen bg-[#050505] text-[#f5f5f5]">
       <Header />
@@ -37,7 +41,7 @@ export default function FotografiaPage() {
               <div className="inline-flex items-center space-x-2 border border-[#222222] bg-[#121212] px-3 py-1 mb-2">
                 <Camera className="w-3.5 h-3.5 text-[#DFFF00]" />
                 <span className="text-xs font-tech text-[#DFFF00] uppercase font-bold">
-                  GALERÍA COMPLETA
+                  {PHOTO_CATALOG.length} FOTOGRAFÍAS
                 </span>
               </div>
               <h1 className="font-editorial text-4xl sm:text-6xl font-extrabold text-white tracking-tight uppercase">
@@ -46,22 +50,20 @@ export default function FotografiaPage() {
             </div>
 
             <p className="text-xs font-tech text-[#888888] max-w-md">
-              Filtra por categoría y haz clic en cualquier imagen para verla en grande con su ficha técnica.
+              Elige una categoría para ver su galería completa.
             </p>
           </div>
         </div>
       </section>
 
-      {/* FULL GALLERY GRID WITH CATEGORY FILTERS */}
-      <GalleryGrid
-        showCategoryFilters={true}
-        title="GALERÍA"
-        subtitle="FILTRA POR CATEGORÍA"
+      <CategoryGrid
+        categories={categories}
+        title="CATEGORÍAS"
+        subtitle="ELIGE UNA CATEGORÍA"
+        itemNoun={{ singular: 'fotografía', plural: 'fotografías' }}
       />
 
-      {/* CONTACT CTA SECTION REQUIRED FOR SUBPAGE */}
       <ContactForm />
-
       <Footer />
     </main>
   );

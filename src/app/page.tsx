@@ -3,7 +3,6 @@ import Hero from '@/components/home/Hero';
 import AutonomousInfiniteReel from '@/components/animations/AutonomousInfiniteReel';
 import About from '@/components/home/About';
 import ProyectosPreview from '@/components/home/ProyectosPreview';
-import MixedGrid from '@/components/home/MixedGrid';
 import CTASection from '@/components/home/CTASection';
 import ContactForm from '@/components/home/ContactForm';
 import Footer from '@/components/layout/Footer';
@@ -25,9 +24,6 @@ export default function HomePage() {
 
       {/* PROYECTOS PREVIEW (PORTAL TO SUBPAGES) */}
       <ProyectosPreview />
-
-      {/* MIXED GRID: PHOTOS + VIDEOS SHUFFLED TOGETHER, NO FILTERS */}
-      <MixedGrid photoLimit={10} videoLimit={7} />
 
       {/* HIGH IMPACT CTA SECTION */}
       <CTASection />

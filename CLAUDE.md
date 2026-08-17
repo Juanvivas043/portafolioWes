@@ -368,12 +368,26 @@ quedó inalcanzable.
 
 ## 10. Estado conocido y decisiones tomadas
 
-- **El formulario de contacto no envía nada, y así se queda por ahora.**
-  `ContactForm.handleSubmit` solo hace `setIsSubmitted(true)`; no hay backend,
-  API route ni servicio de email, y **no es un pendiente**. No implementes el
-  envío salvo que el usuario lo pida de forma explícita. Los canales reales de
-  contacto hoy son el enlace `mailto:` y el botón de WhatsApp de la misma
-  sección.
+- **El formulario de contacto sí envía**, vía `src/app/api/send/route.ts` con
+  nodemailer sobre el SMTP de Gmail. Es la **única parte del sitio que necesita
+  servidor**: el resto son páginas estáticas, así que no se puede desplegar como
+  export estático sin perder el formulario.
+  - Manda **dos correos**: el aviso a WES (crítico; si falla, el visitante ve el
+    error) y una confirmación al visitante (cortesía; si falla se registra en el
+    log pero la respuesta sigue siendo `ok`, porque la solicitud ya llegó).
+  - Las credenciales viven en `.env.local` (ignorado por git). `.env.example`
+    documenta las variables. Con Gmail hace falta una **contraseña de
+    aplicación**, no la del correo.
+  - La validación está en `src/helpers/contactValidation.ts`, como función pura.
+    Comprueba también en servidor el consentimiento y **bloquea saltos de línea**
+    en nombre, correo y teléfono: sin eso se podría inyectar una cabecera `Bcc:`
+    y convertir el formulario en un reenviador de spam.
+  - No hay límite de peticiones. Si empieza a llegar spam, ese es el siguiente
+    paso.
+- **Consentimiento y privacidad.** El formulario exige marcar una casilla que
+  enlaza a `/privacidad`. Esa página describe lo que el sitio hace de verdad: sin
+  base de datos, sin analítica y sin cookies de terceros. **Si eso cambia, hay
+  que actualizarla.**
 - **Los Lorem ipsum de `ARTIST_PROFILE` son intencionales** (§7).
 - `out/` y `.next/` son artefactos de build, ignorados por git.
   `next.config.mjs` no declara `output: 'export'`; si `out/` existe, es residuo

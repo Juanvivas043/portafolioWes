@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
 import { Menu, X, ArrowUpRight, Camera, Film } from 'lucide-react';
 import MagneticButton from '@/components/animations/MagneticButton';
@@ -158,17 +159,34 @@ export default function Header({ activeSection }: HeaderProps) {
         </div>
       </header>
 
-      {/* MOBILE / RESPONSIVE SIDEBAR DRAWER */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-[100] lg:hidden flex justify-end">
-          {/* BACKDROP OVERLAY */}
-          <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
+      {/*
+        MOBILE / RESPONSIVE SIDEBAR DRAWER
 
-          {/* SIDEBAR CONTAINER WITH SHARP GEOMETRIC EDGES */}
-          <div className="relative w-full max-w-sm bg-[#0a0a0a] border-l border-[#222222] h-full flex flex-col justify-between p-6 z-10 shadow-2xl overflow-y-auto">
+        AnimatePresence mantiene el panel montado mientras se va, que es lo que
+        permite animar tambien el cierre: sin el, desmontar el nodo lo hacia
+        desaparecer de golpe.
+      */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 z-[100] lg:hidden flex justify-end">
+            {/* BACKDROP OVERLAY */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="fixed inset-0 bg-black/80 backdrop-blur-md"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+
+            {/* SIDEBAR CONTAINER WITH SHARP GEOMETRIC EDGES */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="relative w-full max-w-sm bg-[#0a0a0a] border-l border-[#222222] h-full flex flex-col justify-between p-6 z-10 shadow-2xl overflow-y-auto will-change-transform"
+            >
             {/* DRAWER HEADER WITH MANDATORY CLOSE BUTTON */}
             <div className="flex items-center justify-between border-b border-[#1f1f1f] pb-4">
               <div className="flex items-center space-x-2">
@@ -195,20 +213,31 @@ export default function Header({ activeSection }: HeaderProps) {
               <span className="text-[10px] font-tech uppercase tracking-widest text-[#666666] mb-2">
                 SECCIONES
               </span>
+              {/*
+                Los enlaces entran escalonados detras del panel: el retardo base
+                cubre el deslizamiento para que no aparezcan antes de que el
+                cajon haya llegado.
+              */}
               {navLinks.map((link, idx) => (
-                <Link
+                <motion.div
                   key={link.label}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-between p-3 border border-[#1a1a1a] bg-[#0e0e0e] hover:border-[#DFFF00] hover:bg-[#141414] text-white hover:text-[#DFFF00] transition-all group"
+                  initial={{ opacity: 0, x: 24 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.35, delay: 0.15 + idx * 0.06, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <span className="font-editorial text-lg font-bold tracking-tight">
-                    {link.label}
-                  </span>
-                  <span className="text-xs font-tech text-[#666666] group-hover:text-[#DFFF00]">
-                    0{idx + 1} →
-                  </span>
-                </Link>
+                  <Link
+                    href={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between p-3 border border-[#1a1a1a] bg-[#0e0e0e] hover:border-[#DFFF00] hover:bg-[#141414] text-white hover:text-[#DFFF00] transition-all group"
+                  >
+                    <span className="font-editorial text-lg font-bold tracking-tight">
+                      {link.label}
+                    </span>
+                    <span className="text-xs font-tech text-[#666666] group-hover:text-[#DFFF00]">
+                      0{idx + 1} →
+                    </span>
+                  </Link>
+                </motion.div>
               ))}
 
               <div className="pt-4 border-t border-[#1f1f1f] flex flex-col space-y-2">
@@ -252,9 +281,10 @@ export default function Header({ activeSection }: HeaderProps) {
                 <ArrowUpRight className="w-4 h-4" />
               </Link>
             </div>
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </>
   );
 }

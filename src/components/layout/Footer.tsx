@@ -64,6 +64,11 @@ export default function Footer() {
                   Contacto
                 </Link>
               </li>
+              <li>
+                <Link href="/privacidad" className="hover:text-white transition-colors">
+                  Privacidad
+                </Link>
+              </li>
             </ul>
           </div>
 

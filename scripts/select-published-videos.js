@@ -98,8 +98,9 @@ function writeGitignore(published) {
     '# Los .webm no se versionan por defecto: la libreria completa pesa mas de lo',
     '# que conviene en un repo. Solo suben los que el sitio publica.',
     '/public/media/**/*.webm',
+    '# Recursos fijos de la interfaz (no son piezas del portafolio).',
+    '!/public/media/videos/sitio/*.webm',
     ...published.map((p) => `!/public/media/videos/${p.rel}`),
-    '!/public/media/videos/hero/hero_bg_loop.webm',
     END,
   ].join('\n');
 

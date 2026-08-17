@@ -5,16 +5,12 @@ import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown, ArrowUpRight, Camera, Film, Volume2, VolumeX } from 'lucide-react';
 import MagneticButton from '@/components/animations/MagneticButton';
-import { getFeaturedPhoto, getHeroVideo } from '@/helpers/mediaData';
+import { SITE_MEDIA } from '@/helpers/mediaData';
 
 export default function Hero() {
   const [isAudioMuted, setIsAudioMuted] = useState(true);
   const [timecode, setTimecode] = useState('00:00:00:00');
   const sectionRef = useRef<HTMLElement | null>(null);
-  const heroVideo = getHeroVideo();
-  // El poster es el fotograma real del propio video de fondo: lo que se ve
-  // mientras carga es exactamente el primer plano que va a aparecer.
-  const heroPoster = heroVideo?.posterUrl ?? getFeaturedPhoto('artistas')?.src;
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -52,15 +48,16 @@ export default function Hero() {
         className="absolute inset-0 w-full h-[120%] -top-[10%] pointer-events-none will-change-transform"
       >
         <video
-          key={heroVideo?.id}
           autoPlay
           loop
           muted={isAudioMuted}
           playsInline
           preload="auto"
           disablePictureInPicture
-          poster={heroPoster}
-          src={heroVideo?.streamUrl}
+          // El poster es un fotograma del propio video: lo que se ve mientras
+          // carga es exactamente el primer plano que va a aparecer.
+          poster={SITE_MEDIA.heroPoster}
+          src={SITE_MEDIA.heroVideo}
           className="w-full h-full object-cover grayscale contrast-125 opacity-55"
         />
       </motion.div>
@@ -110,7 +107,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 border border-[#2a2a2a] bg-black/50 backdrop-blur-sm px-3 py-1 mb-4 sm:mb-5"
             >
               <span className="text-[#DFFF00] font-tech text-[10px] sm:text-[11px] tracking-widest font-bold">FOTÓGRAFO</span>
-              <span className="text-[#555555] text-[10px] sm:text-[11px] font-tech">& DIRECTOR AUDIOVISUAL</span>
+              <span className="text-white text-[10px] sm:text-[11px] font-tech">& DIRECTOR AUDIOVISUAL</span>
             </motion.div>
 
             {/* H1 WITH FOCAL BLUR REVEAL */}

@@ -71,29 +71,21 @@ export const PHOTO_CATALOG: readonly PhotoItem[] = GENERATED_PHOTOS;
 export const VIDEO_CATALOG: readonly VideoItem[] = GENERATED_VIDEOS;
 
 /**
- * Video de fondo del Hero.
- *
- * No existe un archivo aparte para el hero: se reutiliza una pieza del propio
- * catalogo, asi que no suma peso al sitio y se beneficia de la misma
- * optimizacion. Antes habia un `hero_bg_loop` generado por separado que ademas
- * se codificaba sin pista de audio, y por eso el boton de sonido no hacia nada.
- *
- * Si el archivo preferido desaparece del catalogo, cae al video apaisado mas
- * largo disponible en lugar de dejar el Hero sin fondo.
+ * Recursos fijos del sitio: no son piezas del portafolio, sino material propio
+ * de la interfaz. Viven en `/media/*\/sitio/` a proposito, fuera de las carpetas
+ * de categoria, para que los scripts de catalogo no los recojan y no aparezcan
+ * en las galerias.
  */
-const HERO_VIDEO_SLUG = 'def-vida-furia-video-festival';
-
-export function getHeroVideo(): VideoItem | undefined {
-  const preferred = VIDEO_CATALOG.find((video) => video.streamUrl.includes(HERO_VIDEO_SLUG));
-  if (preferred) return preferred;
-
-  const landscape = VIDEO_CATALOG.filter((video) => video.width >= video.height);
-  return [...landscape].sort((a, b) => b.durationSeconds - a.durationSeconds)[0] ?? VIDEO_CATALOG[0];
-}
+export const SITE_MEDIA = {
+  heroVideo: '/media/videos/sitio/hero.webm',
+  heroPoster: '/media/imagenes/sitio/hero-poster.webp',
+  /** Retrato de la seccion "Mi trayectoria". */
+  portrait: '/media/imagenes/sitio/mi-trayectoria.webp',
+} as const;
 
 /**
  * Devuelve una foto destacada de una categoria para usarla como imagen fija
- * (portada de seccion, poster del hero, retrato de About...).
+ * (portada de seccion, imagen para compartir...).
  *
  * Las secciones tenian la ruta escrita a mano y al reoptimizar la libreria los
  * archivos cambiaron de nombre: todas quedaron rotas a la vez. Leyendolas del
@@ -103,6 +95,57 @@ export function getFeaturedPhoto(category: PhotoCategory, offset: number = 0): P
   const pool = PHOTO_CATALOG.filter((photo) => photo.category === category);
   if (pool.length === 0) return PHOTO_CATALOG[0];
   return pool[offset % pool.length];
+}
+
+/**
+ * Una categoria tal y como se presenta en el indice de cada disciplina:
+ * su nombre, cuantas piezas tiene, la portada y a donde lleva.
+ */
+export interface CategoryEntry {
+  id: string;
+  label: string;
+  count: number;
+  cover: string;
+  href: string;
+}
+
+/**
+ * Construye el indice de categorias de fotografia.
+ *
+ * La portada es una pieza real de la propia categoria (la primera del
+ * catalogo), no una imagen elegida a mano: al reimportar la libreria las
+ * portadas se reponen solas y nunca apuntan a un archivo que ya no existe.
+ * Solo aparecen las categorias que tienen material.
+ */
+export function getPhotoCategories(): CategoryEntry[] {
+  return (Object.keys(PHOTO_CATEGORY_LABELS) as PhotoCategory[])
+    .map((id) => {
+      const items = PHOTO_CATALOG.filter((photo) => photo.category === id);
+      return {
+        id,
+        label: PHOTO_CATEGORY_LABELS[id],
+        count: items.length,
+        cover: items[0]?.src ?? '',
+        href: `/proyectos/fotografia/${id}`,
+      };
+    })
+    .filter((entry) => entry.count > 0);
+}
+
+/** Igual que el anterior, pero la portada es el fotograma real del video. */
+export function getVideoCategories(): CategoryEntry[] {
+  return (Object.keys(VIDEO_CATEGORY_LABELS) as VideoCategory[])
+    .map((id) => {
+      const items = VIDEO_CATALOG.filter((video) => video.category === id);
+      return {
+        id,
+        label: VIDEO_CATEGORY_LABELS[id],
+        count: items.length,
+        cover: items[0]?.posterUrl ?? '',
+        href: `/proyectos/video/${id}`,
+      };
+    })
+    .filter((entry) => entry.count > 0);
 }
 
 export const PHOTO_CATEGORY_LABELS: Readonly<Record<PhotoCategory, string>> = {
@@ -179,30 +222,38 @@ export const ARTIST_PROFILE = {
       ],
     },
   ],
+  /**
+   * Cifras de trayectoria que abre la seccion About. Son datos que solo WES
+   * puede confirmar (no se deducen del catalogo), asi que viven aqui y el
+   * componente solo las pinta.
+   */
   stats: [
-    { number: '120+', label: 'Proyectos Completados' },
-    { number: '45+', label: 'Videoclips & Spots Dirigidos' },
-    { number: '15+', label: 'Marcas Globales' },
-    { number: '5+', label: 'Años de Trayectoria' },
+    { value: 150, prefix: '+', label: 'Producciones' },
+    { value: 10, prefix: '+', label: 'Años de trayectoria' },
+    { value: 30, prefix: '+', label: 'Clientes & marcas' },
+    { value: 300, prefix: '+', label: 'Piezas publicadas' },
   ],
   clients: [
     'FURIA GEAR',
-    'NOREH / SONY LATAM',
+    'NOREH',
+    'SONY LATAM',
     'DEVANT EYEWEAR',
     'ANIMA FESTIVAL',
     'THE FLOWERSHOP',
     'BJJ FEDERATION',
     'CHELONIA',
     'STACY MALIBU',
-    'PAPELÓN MUNDIAL',
+    'PAPELÓN',
   ],
   socials: {
-    instagram: 'https://instagram.com',
+    instagram: 'https://instagram.com/weslypacheco',
     vimeo: 'https://vimeo.com',
     youtube: 'https://youtube.com',
     behance: 'https://behance.net',
-    email: 'contacto@wesfotografia.com',
-    phone: '+58 412 000 0000',
-    whatsapp: 'https://wa.me/584120000000',
+    email: 'wesly080998@gmail.com',
+    /** Como se muestra en pantalla. */
+    phone: '+58 414 233 2570',
+    /** wa.me exige el numero en formato internacional y sin signos. */
+    whatsapp: 'https://wa.me/584142332570',
   },
 };

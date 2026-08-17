@@ -2,15 +2,12 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ARTIST_PROFILE, PHOTO_CATALOG, VIDEO_CATALOG, getFeaturedPhoto } from '@/helpers/mediaData';
-import { Sliders } from 'lucide-react';
+import { ARTIST_PROFILE, SITE_MEDIA } from '@/helpers/mediaData';
 import { FadeUp, StaggerContainer, StaggerItem } from '@/components/animations/MotionWrapper';
 import ScrollDrawLine from '@/components/animations/ScrollDrawLine';
 import CounterStat from '@/components/animations/CounterStat';
 
 export default function About() {
-  const portrait = getFeaturedPhoto('artistas', 1);
-
   return (
     <section id="about" className="py-16 sm:py-24 bg-[#080808] border-b border-[#222222] relative overflow-hidden">
       {/* BACKGROUND DECORATIVE GRID LINES */}
@@ -41,30 +38,23 @@ export default function About() {
 
         {/* TELEMETRY STATS COUNTER BAR */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-12">
-          <div className="p-4 bg-[#0c0c0c] border border-[#1f1f1f] hover:border-[#DFFF00]/50 transition-colors">
-            <div className="text-[10px] font-tech text-[#666666] tracking-widest uppercase">PRODUCCIONES</div>
-            <div className="text-3xl font-editorial font-bold text-white mt-1">
-              <CounterStat value={50} prefix="+" />
+          {ARTIST_PROFILE.stats.map((stat, index) => (
+            <div
+              key={stat.label}
+              className="p-4 bg-[#0c0c0c] border border-[#1f1f1f] hover:border-[#DFFF00]/50 transition-colors"
+            >
+              <div className="text-[10px] font-tech text-[#666666] tracking-widest uppercase">
+                {stat.label}
+              </div>
+              <div
+                className={`text-3xl font-editorial font-bold mt-1 ${
+                  index % 2 === 0 ? 'text-white' : 'text-[#DFFF00]'
+                }`}
+              >
+                <CounterStat value={stat.value} prefix={stat.prefix} />
+              </div>
             </div>
-          </div>
-          <div className="p-4 bg-[#0c0c0c] border border-[#1f1f1f] hover:border-[#DFFF00]/50 transition-colors">
-            <div className="text-[10px] font-tech text-[#666666] tracking-widest uppercase">AÑOS DE TRAYECTORIA</div>
-            <div className="text-3xl font-editorial font-bold text-[#DFFF00] mt-1">
-              <CounterStat value={6} prefix="+" />
-            </div>
-          </div>
-          <div className="p-4 bg-[#0c0c0c] border border-[#1f1f1f] hover:border-[#DFFF00]/50 transition-colors">
-            <div className="text-[10px] font-tech text-[#666666] tracking-widest uppercase">CLIENTES & MARCAS</div>
-            <div className="text-3xl font-editorial font-bold text-white mt-1">
-              <CounterStat value={ARTIST_PROFILE.clients.length} prefix="+" />
-            </div>
-          </div>
-          <div className="p-4 bg-[#0c0c0c] border border-[#1f1f1f] hover:border-[#DFFF00]/50 transition-colors">
-            <div className="text-[10px] font-tech text-[#666666] tracking-widest uppercase">PIEZAS PUBLICADAS</div>
-            <div className="text-3xl font-editorial font-bold text-[#DFFF00] mt-1">
-              <CounterStat value={PHOTO_CATALOG.length + VIDEO_CATALOG.length} />
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* MAIN ABOUT GRID */}
@@ -83,7 +73,7 @@ export default function About() {
 
               <div className="relative aspect-[3/4] bg-black overflow-hidden border border-[#1f1f1f]">
                 <Image
-                  src={portrait?.src ?? ''}
+                  src={SITE_MEDIA.portrait}
                   alt="WES Director y Fotógrafo"
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
@@ -202,34 +192,8 @@ export default function About() {
           </div>
         </div>
 
-        {/* GEAR & OPTICS SECTION */}
-        <FadeUp delay={0.2} className="mt-20 pt-12 border-t border-[#222222]">
-          <div className="flex items-center space-x-2 text-xs font-tech text-[#DFFF00] uppercase tracking-widest mb-6">
-            <Sliders className="w-4 h-4" />
-            <span>EQUIPO DE TRABAJO</span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {ARTIST_PROFILE.gear.map((gearCategory) => (
-              <div key={gearCategory.category} className="p-5 border border-[#1f1f1f] bg-[#0c0c0c] hover:border-[#333333] transition-colors">
-                <div className="text-sm font-editorial font-bold text-white tracking-wide pb-3 mb-3 border-b border-[#1f1f1f]">
-                  {gearCategory.category}
-                </div>
-                <ul className="space-y-2 text-xs font-tech text-[#999999]">
-                  {gearCategory.items.map((item, idx) => (
-                    <li key={idx} className="flex items-start space-x-2">
-                      <span className="text-[#DFFF00] font-bold">›</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </FadeUp>
-
         {/* CLIENT ROSTER */}
-        <FadeUp delay={0.1} className="mt-16 pt-10 border-t border-[#1f1f1f]">
+        <FadeUp delay={0.1} className="mt-20 pt-12 border-t border-[#222222]">
           <div className="text-center text-xs font-tech text-[#666666] uppercase tracking-widest mb-6">
             CLIENTES & MARCAS
           </div>
