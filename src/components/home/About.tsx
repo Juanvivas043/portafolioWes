@@ -64,7 +64,7 @@ export default function About() {
             <div className="border-2 border-[#2a2a2a] bg-[#0d0d0d] p-2 relative group">
               {/* TOP RETICLE */}
               <div className="flex items-center justify-between text-[10px] font-tech text-[#888888] pb-2 mb-2 border-b border-[#1f1f1f]">
-                <span>FOTÓGRAFO & DIRECTOR</span>
+                <span>DIRECTOR AUDIOVISUAL</span>
                 <span className="text-[#DFFF00] flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 bg-[#DFFF00] animate-pulse" />
                   DISPONIBLE
@@ -74,7 +74,7 @@ export default function About() {
               <div className="relative aspect-[3/4] bg-black overflow-hidden border border-[#1f1f1f]">
                 <Image
                   src={SITE_MEDIA.portrait}
-                  alt="WES Director y Fotógrafo"
+                  alt="WES, director audiovisual"
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
                   className="object-cover grayscale contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700"
@@ -137,17 +137,34 @@ export default function About() {
 
           {/* RIGHT: BIOGRAPHY, PHILOSOPHY & TRAJECTORY */}
           <div className="lg:col-span-7 space-y-8">
-            {/* BIO TEXT */}
-            <FadeUp delay={0.2} className="space-y-4">
-              <h3 className="font-editorial text-2xl font-bold text-white tracking-tight">
-                MI VISIÓN
-              </h3>
-              <p className="text-sm sm:text-base text-[#b0b0b0] font-sans leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              </p>
-              <p className="text-sm text-[#888888] font-sans leading-relaxed">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
+            {/* BIO: CITA DE APERTURA + TÍTULO + TEXTO */}
+            <FadeUp delay={0.2} className="space-y-6">
+              {/*
+                Primer bloque de cita del sitio. Sin fondo de color, que la
+                dirección de arte lo prohíbe: se destaca con el mismo borde de
+                acento que ya usan las fichas de los modales.
+              */}
+              <figure className="border-l-2 border-[#DFFF00] pl-4 sm:pl-5">
+                <blockquote className="font-editorial text-base sm:text-lg text-[#e5e5e5] leading-relaxed">
+                  &ldquo;El verdadero arte audiovisual no busca que el espectador mire una
+                  pantalla, sino que mire el mundo con otros ojos a través de él.&rdquo;
+                </blockquote>
+                <figcaption className="mt-2 text-[11px] font-tech text-[#888888] uppercase tracking-widest">
+                  — Guillermo del Toro
+                </figcaption>
+              </figure>
+
+              <div className="space-y-4">
+                <h3 className="font-editorial text-2xl font-bold text-white tracking-tight">
+                  DETRÁS DEL LENTE
+                </h3>
+                <p className="text-sm sm:text-base text-[#b0b0b0] font-sans leading-relaxed">
+                  El audiovisual más que mi trabajo, es mi lenguaje y la forma en que
+                  entiendo y comparto el mundo. Ya sea desde la dirección, la cámara o la
+                  edición, me enfoco en transformar ideas en historias visuales que de
+                  verdad se sientan.
+                </p>
+              </div>
             </FadeUp>
 
             {/* TIMELINE / TRAYECTORIA WITH PROGRESSIVE TRACER LINE */}

@@ -169,7 +169,7 @@ export const VIDEO_CATEGORY_LABELS: Readonly<Record<VideoCategory, string>> = {
 
 export const ARTIST_PROFILE = {
   name: 'WES',
-  role: 'Fotógrafo & Director de Fotografía Audiovisual',
+  role: 'Director Audiovisual',
   location: 'Caracas, Venezuela • Disponible Globalmente',
   bio: `Creador audiovisual y director de fotografía con más de 7 años de trayectoria capturando la energía cruda de la música en vivo, campañas de marcas internacionales, retratos de alta costura y deportes extremos. Mi visión artística se fundamenta en la precisión geométrica, el contraste agresivo en claroscuro y la autenticidad sin filtros.`,
   trajectory: [
