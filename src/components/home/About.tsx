@@ -167,13 +167,29 @@ export default function About() {
               </div>
             </FadeUp>
 
-            {/* TIMELINE / TRAYECTORIA WITH PROGRESSIVE TRACER LINE */}
+            {/*
+              TRAYECTORIA - DESACTIVADA TEMPORALMENTE
+
+              Se oculta a peticion de WES mientras prepara los datos reales: las
+              tres tarjetas seguian mostrando Lorem ipsum en la empresa y en la
+              descripcion (ARTIST_PROFILE.trajectory, en helpers/mediaData.ts).
+
+              Para reactivarla, borra este envoltorio y vuelve a rodear con
+              llaves y barras los dos rotulos internos que aqui aparecen como
+              texto plano: "TIMELINE / TRAYECTORIA..." y "VERTICAL TRACER
+              LINE...". Se pasaron a texto porque un cierre de comentario
+              anidado terminaria este bloque antes de tiempo.
+
+              Mientras siga desactivada, StaggerContainer y StaggerItem quedan
+              importados sin usarse.
+
+            TIMELINE / TRAYECTORIA WITH PROGRESSIVE TRACER LINE
             <div className="space-y-4 pt-4 border-t border-[#1f1f1f] relative">
               <span className="text-xs font-tech text-[#DFFF00] uppercase tracking-widest block">
                 TRAYECTORIA
               </span>
 
-              {/* VERTICAL TRACER LINE THAT DRAWS DOWNWARD WITH SCROLL */}
+              VERTICAL TRACER LINE THAT DRAWS DOWNWARD WITH SCROLL
               <div className="relative pl-4 border-l border-[#1f1f1f]">
                 <motion.div
                   initial={{ scaleY: 0, originY: 0 }}
@@ -206,6 +222,8 @@ export default function About() {
                 </StaggerContainer>
               </div>
             </div>
+            */}
+
           </div>
         </div>
 
