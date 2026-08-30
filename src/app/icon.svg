@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!--
+    Favicon de WES. Replica la marca del header y el footer: la W sobre el
+    cuadro de acento, con aristas vivas y sin esquinas redondeadas.
+
+    La W va dibujada como trazo, no como texto: un SVG de favicon no carga
+    fuentes externas, asi que un <text> se renderizaria con una tipografia
+    distinta en cada navegador.
+
+    El trazo es deliberadamente grueso y el vertice central alto: a 16px, que
+    es el tamano real en la pestana, un trazo fino hace que el pico del medio
+    se difumine y la W deje de leerse.
+  -->
+  <rect width="64" height="64" fill="#DFFF00" />
+  <path
+    d="M9 15 L21 49 L32 25 L43 49 L55 15"
+    fill="none"
+    stroke="#000000"
+    stroke-width="10"
+    stroke-linejoin="miter"
+    stroke-linecap="butt"
+    stroke-miterlimit="10"
+  />
+</svg>
